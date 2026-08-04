@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>NAC-Business - Trouvez un professionnel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Theo Pro">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Theo Pro">
+    <meta name="theme-color" content="#0f0c29">
+    <meta name="msapplication-TileColor" content="#0f0c29">
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#ffb347">
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --primary-blue: #003366;
+            --dark-blue: #002244;
+            --accent-yellow: #ffb347;
+            --white: #ffffff;
+            --light-gray: #f8f9fa;
+            --success-green: #28a745;
+            --danger-red: #dc3545;
+            --info-blue: #17a2b8;
+            --shadow: 0 4px 20px rgba(0, 51, 102, 0.08);
+            --radius: 16px;
+        }
+        body {
+            background: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ===== HEADER ===== */
+        .app-header {
+            background: var(--primary-blue);
+            padding: 8px 16px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            flex-wrap: wrap;
+            gap: 4px;
+        }
+        .header-title {
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+        .header-title i { color: var(--accent-yellow); margin-right: 6px; }
+        .header-sub {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.65rem;
+            font-weight: 400;
+        }
+        .header-badge {
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .header-badge i { font-size: 0.8rem; }
+
+        /* ===== BANNIÈRE ===== */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 16px 20px;
+            color: var(--white);
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+        }
+        .hero-section h1 i { color: var(--accent-yellow); margin-right: 8px; }
+        .hero-section p {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 0;
+        }
+
+        /* ===== FILTRES ULTRA COMPACT ===== */
+        .filter-section {
+            background: var(--white);
+            padding: 8px 16px;
+            border-bottom: 1px solid #e8ecf0;
+            position: sticky;
+            top: 58px;
+            z-index: 99;
+            box-shadow: 0 1px 6px rgba(0,0,0,0.04);
+        }
+        .filter-section .form-control, 
+        .filter-section .form-select {
+            border-radius: 8px;
+            padding: 4px 10px;
+            border: 1.5px solid #e8ecf0;
+            font-size: 0.75rem;
+            height: 32px;
+            transition: border-color 0.3s;
+        }
+        .filter-section .form-control:focus, 
+        .filter-section .form-select:focus {
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.15rem rgba(0,51,102,0.1);
+        }
+        .filter-section .btn-primary {
+            background: var(--primary-blue);
+            border: none;
+            border-radius: 8px;
+            padding: 4px 12px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            height: 32px;
+        }
+        .filter-section .btn-primary:hover { background: var(--dark-blue); }
+        .filter-section .btn-outline-secondary {
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            height: 32px;
+            border-color: #e8ecf0;
+        }
+        .filter-section .btn-outline-secondary:hover {
+            background: #f0f2f5;
+        }
+        .filter-section .filter-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            margin-bottom: 1px;
+            display: block;
+        }
+        .filter-section .row.g-1 { --bs-gutter-x: 0.25rem; --bs-gutter-y: 0.25rem; }
+        .filter-section .row.g-1 > * { padding-left: calc(var(--bs-gutter-x) * 0.5); padding-right: calc(var(--bs-gutter-x) * 0.5); }
+
+        .filter-hint {
+            font-size: 0.6rem;
+            color: #aaa;
+            margin-top: 3px;
+            text-align: center;
+        }
+        .filter-hint i { font-size: 0.5rem; }
+
+        /* ===== CONTENU PRINCIPAL ===== */
+        .main-content {
+            padding: 12px 16px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        /* ===== GRILLE DES MEMBRES ===== */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+
+        .member-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 14px 16px;
+            box-shadow: var(--shadow);
+            border: 1px solid #e8ecf0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        .member-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,51,102,0.12);
+        }
+        .member-card .card-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: var(--accent-yellow);
+            color: var(--primary-blue);
+            padding: 1px 10px;
+            border-radius: 16px;
+            font-size: 0.55rem;
+            font-weight: 700;
+        }
+        .member-card .card-badge.popular {
+            background: #ff6b6b;
+            color: white;
+        }
+        .member-card .card-badge i { margin-right: 3px; }
+
+        .member-card .card-avatar {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .member-card .card-avatar img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent-yellow);
+        }
+        .member-card .card-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: var(--primary-blue);
+            text-align: center;
+            margin-bottom: 2px;
+        }
+        .member-card .card-role {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        .member-card .card-role .badge-role {
+            padding: 2px 10px;
+            border-radius: 16px;
+            font-size: 0.6rem;
+            font-weight: 600;
+        }
+        .badge-role.frere { background: #17a2b8; color: white; }
+        .badge-role.diacre { background: #6f42c1; color: white; }
+        .badge-role.pretre { background: #dc3545; color: white; }
+        .badge-role.rsd { background: #fd7e14; color: white; }
+        .badge-role.berger { background: #28a745; color: white; }
+        .badge-role.evangeliste { background: #20c997; color: white; }
+        .badge-role.leade { background: #0d6efd; color: white; }
+        .badge-role.anciens { background: #6c757d; color: white; }
+        .badge-role.rd { background: #e83e8c; color: white; }
+
+        .member-card .card-professions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 3px;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+        .member-card .card-professions .profession-tag {
+            padding: 1px 8px;
+            background: #eef1f5;
+            border-radius: 16px;
+            font-size: 0.55rem;
+            color: #555;
+        }
+        .member-card .card-location {
+            text-align: center;
+            font-size: 0.65rem;
+            color: #888;
+        }
+        .member-card .card-location i { margin-right: 3px; font-size: 0.55rem; }
+        .member-card .card-status {
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.6rem;
+            color: var(--success-green);
+        }
+        .member-card .card-status i { margin-right: 3px; font-size: 0.55rem; }
+
+        /* ===== OVERLAY DÉTAIL ===== */
+        .detail-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 500;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(4px);
+        }
+        .detail-overlay.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .detail-window {
+            background: var(--white);
+            border-radius: 16px;
+            max-width: 650px;
+            width: 95%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            position: relative;
+            animation: slideUp 0.4s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(40px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .detail-window .detail-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            color: var(--white);
+            border-radius: 16px 16px 0 0;
+        }
+        .detail-window .detail-avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-yellow);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .detail-window .detail-info h2 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 2px;
+        }
+        .detail-window .detail-role {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .detail-window .detail-role .badge-role {
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        .detail-window .detail-role .detail-location {
+            font-size: 0.75rem;
+            opacity: 0.85;
+        }
+        .detail-window .detail-role .detail-location i { margin-right: 4px; }
+
+        .detail-window .detail-body {
+            padding: 16px 20px 20px;
+        }
+
+        .detail-window .detail-close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+            z-index: 10;
+        }
+        .detail-window .detail-close-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .detail-window .detail-back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: #f0f2f5;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 12px;
+        }
+        .detail-window .detail-back-btn:hover {
+            background: #e0e4e9;
+        }
+
+        .detail-window .detail-info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin: 12px 0;
+        }
+        .detail-window .detail-info-item {
+            background: #f7f9fb;
+            border-radius: 8px;
+            padding: 8px 12px;
+            border: 1px solid #eef1f5;
+        }
+        .detail-window .detail-info-item .label {
+            font-size: 0.55rem;
+            color: #888;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            display: block;
+            margin-bottom: 2px;
+        }
+        .detail-window .detail-info-item .label i { margin-right: 3px; }
+        .detail-window .detail-info-item .value {
+            font-size: 0.8rem;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+        .detail-window .detail-info-item.full-width { grid-column: 1 / -1; }
+
+        .detail-window .detail-professions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 2px;
+        }
+        .detail-window .detail-professions .profession-tag {
+            padding: 2px 12px;
+            background: var(--primary-blue);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        /* ===== SECTION DOCUMENT AMÉLIORÉE ===== */
+        .detail-window .detail-document {
+            background: #f0f8ff;
+            border-radius: 12px;
+            padding: 12px 16px;
+            border: 2px solid var(--primary-blue);
+            margin: 12px 0;
+            position: relative;
+        }
+
+        .detail-window .detail-document .doc-label {
+            font-size: 0.6rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-bottom: 8px;
+        }
+        .detail-window .detail-document .doc-label i {
+            font-size: 0.9rem;
+        }
+
+        .detail-window .detail-document .doc-preview {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e8ecf0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .detail-window .detail-document .doc-preview:hover {
+            background: #f8faff;
+            border-color: var(--primary-blue);
+        }
+
+        .detail-window .detail-document .doc-preview .doc-icon {
+            font-size: 28px;
+            color: var(--danger-red);
+            flex-shrink: 0;
+        }
+        .detail-window .detail-document .doc-preview .doc-info {
+            flex: 1;
+        }
+        .detail-window .detail-document .doc-preview .doc-info .doc-name {
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 0.8rem;
+        }
+        .detail-window .detail-document .doc-preview .doc-info .doc-size {
+            font-size: 0.6rem;
+            color: #999;
+        }
+        .detail-window .detail-document .doc-preview .doc-open-btn {
+            background: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 4px 14px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.3s;
+        }
+        .detail-window .detail-document .doc-preview .doc-open-btn:hover {
+            background: var(--dark-blue);
+            color: white;
+        }
+
+        /* ===== APERÇU DU PDF (intégré) ===== */
+        .detail-window .detail-document .doc-embedded {
+            margin-top: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e8ecf0;
+            background: white;
+        }
+        .detail-window .detail-document .doc-embedded iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            display: block;
+        }
+        .detail-window .detail-document .doc-embedded .doc-embed-placeholder {
+            padding: 20px;
+            text-align: center;
+            color: #888;
+        }
+        .detail-window .detail-document .doc-embedded .doc-embed-placeholder i {
+            font-size: 40px;
+            display: block;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+
+        .detail-window .detail-contact {
+            display: flex;
+            gap: 8px;
+            padding-top: 12px;
+            border-top: 1.5px solid #eef1f5;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 12px;
+        }
+        .detail-window .detail-contact .btn {
+            border-radius: 20px;
+            padding: 6px 18px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            border: none;
+            transition: all 0.3s;
+            font-size: 0.75rem;
+            min-width: 100px;
+            justify-content: center;
+        }
+        .detail-window .detail-contact .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .btn-whatsapp { background: #25D366; color: white; }
+        .btn-whatsapp:hover { background: #1da851; color: white; }
+        .btn-phone { background: #34B7F1; color: white; }
+        .btn-phone:hover { background: #1a9fd6; color: white; }
+        .btn-tiktok { background: #000000; color: white; }
+        .btn-tiktok:hover { background: #1a1a1a; color: white; }
+
+        /* ===== ÉTAT VIDE ===== */
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #999;
+            grid-column: 1 / -1;
+        }
+        .empty-state i {
+            font-size: 40px;
+            color: #e0e0e0;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .app-header { padding: 6px 12px; }
+            .header-title { font-size: 0.9rem; }
+            .header-sub { font-size: 0.55rem; }
+            .header-badge { font-size: 0.65rem; padding: 2px 10px; }
+            .main-content { padding: 8px 10px; }
+            .members-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
+            .member-card { padding: 10px 12px; }
+            .member-card .card-avatar img { width: 48px; height: 48px; }
+            .member-card .card-name { font-size: 0.75rem; }
+            .member-card .card-badge { font-size: 0.45rem; padding: 1px 6px; }
+            .filter-section { top: 52px; padding: 6px 12px; }
+            .filter-section .form-control, 
+            .filter-section .form-select { font-size: 0.65rem; height: 28px; padding: 2px 8px; }
+            .filter-section .btn-primary,
+            .filter-section .btn-outline-secondary { font-size: 0.65rem; height: 28px; padding: 2px 10px; }
+            .filter-section .filter-label { font-size: 0.5rem; }
+            .filter-hint { font-size: 0.5rem; }
+            .hero-section { padding: 12px 16px; }
+            .hero-section h1 { font-size: 1.1rem; }
+            .hero-section p { font-size: 0.75rem; }
+
+            .detail-window .detail-header { flex-direction: column; text-align: center; padding: 16px; }
+            .detail-window .detail-role { justify-content: center; }
+            .detail-window .detail-close-btn { top: 8px; right: 8px; width: 32px; height: 32px; font-size: 1rem; }
+            .detail-window .detail-info-grid { grid-template-columns: 1fr; gap: 6px; }
+            .detail-window .detail-contact .btn { min-width: 80px; padding: 4px 12px; font-size: 0.65rem; }
+            .detail-window .detail-avatar img { width: 60px; height: 60px; }
+            .detail-window .detail-info h2 { font-size: 1rem; }
+            .detail-window .detail-document .doc-preview { flex-direction: column; text-align: center; }
+            .detail-window .detail-document .doc-embedded iframe { height: 200px; }
+        }
+
+        @media (max-width: 480px) {
+            .members-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .member-card .card-professions .profession-tag { font-size: 0.45rem; padding: 1px 5px; }
+            .member-card .card-location { font-size: 0.55rem; }
+            .member-card .card-role .badge-role { font-size: 0.5rem; padding: 1px 6px; }
+            .detail-window .detail-contact { flex-direction: column; align-items: stretch; }
+            .detail-window .detail-contact .btn { width: 100%; }
+            .detail-window .detail-document .doc-embedded iframe { height: 150px; }
+        }
+
+        /* ===== LOADING & TOAST ===== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+        .spinner-custom {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--white);
+            border-top-color: var(--accent-yellow);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .toast-container {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .toast-custom {
+            background: var(--white);
+            border-left: 3px solid var(--success-green);
+            padding: 8px 16px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            font-size: 0.75rem;
+            font-weight: 500;
+            animation: slideIn 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .toast-custom.error { border-left-color: var(--danger-red); }
+        .toast-custom i { font-size: 1rem; }
+        .toast-custom.error i { color: var(--danger-red); }
+        .toast-custom.success i { color: var(--success-green); }
+
+        @keyframes slideIn {
+            from { transform: translateX(80px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner-custom"></div>
+    </div>
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== OVERLAY DÉTAIL ===== -->
+    <div class="detail-overlay" id="detailOverlay" onclick="if(event.target===this) closeDetail()">
+        <div class="detail-window" id="detailWindow">
+            <button class="detail-close-btn" onclick="closeDetail()">
+                <i class="bi bi-x-lg"></i>
+            </button>
+
+            <div class="detail-header">
+                <div class="detail-avatar">
+                    <img id="detailPhoto" src="" alt="Photo">
+                </div>
+                <div class="detail-info">
+                    <h2 id="detailNom">-</h2>
+                    <div class="detail-role">
+                        <span class="badge-role" id="detailResponsabilite">-</span>
+                        <span class="detail-location"><i class="bi bi-geo-alt-fill"></i> <span id="detailChampDistrict">-</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="detail-body">
+                <button class="detail-back-btn" onclick="closeDetail()">
+                    <i class="bi bi-arrow-left"></i> Retour
+                </button>
+
+                <div class="detail-info-grid" id="detailInfoGrid"></div>
+
+                <!-- ===== SECTION DOCUMENT INTÉGRÉ ===== -->
+                <div id="detailDocumentSection" style="display:none;" class="detail-document">
+                    <div class="doc-label">
+                        <i class="bi bi-file-earmark-pdf-fill"></i> Document joint
+                    </div>
+                    <div class="doc-preview" id="docPreview" onclick="openDocument()">
+                        <div class="doc-icon">
+                            <i class="bi bi-file-pdf-fill"></i>
+                        </div>
+                        <div class="doc-info">
+                            <div class="doc-name" id="docFileName">Document</div>
+                            <div class="doc-size" id="docFileSize">PDF · Cliquez pour ouvrir</div>
+                        </div>
+                        <button class="doc-open-btn" onclick="event.stopPropagation(); openDocument();">
+                            <i class="bi bi-eye"></i> Ouvrir
+                        </button>
+                    </div>
+                    <!-- APERÇU INTÉGRÉ DU PDF -->
+                    <div class="doc-embedded" id="docEmbedded" style="display:none;">
+                        <iframe id="docIframe" src=""></iframe>
+                    </div>
+                    <div style="text-align:center; margin-top:6px;">
+                        <button class="btn btn-sm btn-outline-primary" onclick="toggleEmbed()" id="toggleEmbedBtn" style="font-size:0.65rem; padding:2px 12px; border-radius:16px;">
+                            <i class="bi bi-eye"></i> Aperçu rapide
+                        </button>
+                    </div>
+                </div>
+
+                <div class="detail-contact" id="detailContact"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== HEADER ===== -->
+    <header class="app-header">
+        <div>
+            <div class="header-title"><i class="bi bi-briefcase-fill"></i> NAC-Entreprenariat</div>
+            <div class="header-sub">Annuaire professionnel de l'Église neo apostolique de la RDC sud-est</div>
+        </div>
+        <div>
+            <span class="header-badge">
+                <i class="bi bi-people-fill"></i> <span id="totalMembres">0</span>
+            </span>
+        </div>
+    </header>
+
+    <!-- ===== BANNIÈRE ===== -->
+    <div class="hero-section">
+        <h1><i class="bi bi-search-heart"></i> Trouvez un professionnel</h1>
+        <p>Connectez-vous avec des membres de l'église pour vos besoins professionnels</p>
+    </div>
+
+    <!-- ===== FILTRES ULTRA COMPACT ===== -->
+    <div class="filter-section">
+        <div class="row g-1 align-items-end">
+            <div class="col-12 col-sm-5">
+                <span class="filter-label"><i class="bi bi-briefcase me-1"></i>Profession</span>
+                <input type="text" class="form-control w-100" id="filterProfession"
+                       placeholder="Tapez une profession..." list="professionSuggestions">
+                <datalist id="professionSuggestions"></datalist>
+            </div>
+            <div class="col-7 col-sm-4">
+                <span class="filter-label"><i class="bi bi-geo-alt me-1"></i>Quartier</span>
+                <input type="text" class="form-control w-100" id="filterQuartier"
+                       placeholder="Tapez un quartier...">
+            </div>
+            <div class="col-5 col-sm-3">
+                <div class="d-flex gap-1">
+                    <button class="btn btn-primary" onclick="applyFilters()" style="flex:1;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                    <button class="btn btn-outline-secondary" onclick="resetFilters()" title="Réinitialiser">
+                        <i class="bi bi-arrow-counterclockwise"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="filter-hint">
+            <i class="bi bi-info-circle"></i> Filtres optionnels · Laissez vide pour voir tous les membres
+        </div>
+    </div>
+
+    <!-- ===== CONTENU PRINCIPAL ===== -->
+    <div class="main-content">
+
+        <!-- ===== GRILLE DES MEMBRES ===== -->
+        <div class="members-grid" id="membersGrid">
+            <div class="empty-state">
+                <i class="bi bi-hourglass-split"></i>
+                <p>Chargement des membres...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== FIREBASE ===== -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        // ===== CONFIGURATION FIREBASE =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyBasZlBNzWyUT7mujoXfjoOhY_gFDlYCvA",
+            authDomain: "theovet-gestion.firebaseapp.com",
+            databaseURL: "https://theovet-gestion-default-rtdb.firebaseio.com",
+            projectId: "theovet-gestion",
+            storageBucket: "theovet-gestion.firebasestorage.app",
+            messagingSenderId: "741805895445",
+            appId: "1:741805895445:web:31ea2d95b329a55b79831c",
+            measurementId: "G-EP0ZQBBNEY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // ===== ÉTAT =====
+        let allMembers = [];
+        let allProfessions = [];
+        let selectedMemberId = null;
+        let currentDocumentUrl = '';
+
+        // ===== TOAST =====
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = 'toast-custom ' + (type === 'error' ? 'error' : 'success');
+            const icon = type === 'success' ? 'bi-check-circle-fill' : 'bi-exclamation-triangle-fill';
+            toast.innerHTML = `<i class="bi ${icon}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3500);
+        }
+
+        function showLoading(visible) {
+            document.getElementById('loadingOverlay').style.display = visible ? 'flex' : 'none';
+        }
+
+        // ===== UTILITAIRES =====
+        function cleanPhoneNumber(phone) {
+            if (!phone) return '';
+            return phone.replace(/\D/g, '');
+        }
+
+        function getRoleClass(responsabilite) {
+            const map = {
+                'frere': 'frere',
+                'diacre': 'diacre',
+                'pretre': 'pretre',
+                'rsd': 'rsd',
+                'berger': 'berger',
+                'evangeliste': 'evangeliste',
+                'leade': 'leade',
+                'anciens': 'anciens',
+                'rd': 'rd'
+            };
+            return map[responsabilite] || 'frere';
+        }
+
+        function getRoleLabel(responsabilite) {
+            const map = {
+                'frere': 'Frère',
+                'diacre': 'Diacre',
+                'pretre': 'Prêtre',
+                'rsd': 'RSD',
+                'berger': 'Berger',
+                'evangeliste': 'Évangéliste',
+                'leade': 'Leade',
+                'anciens': 'Anciens',
+                'rd': 'RD'
+            };
+            return map[responsabilite] || responsabilite || 'N/A';
+        }
+
+        // ===== CHARGER LES MEMBRES =====
+        async function loadAllMembers() {
+            showLoading(true);
+            try {
+                const snapshot = await db.collection('membres').orderBy('nom', 'asc').get();
+                allMembers = [];
+                const profSet = new Set();
+
+                snapshot.forEach(doc => {
+                    const m = doc.data();
+                    const id = doc.id;
+                    allMembers.push({ id, ...m });
+                    if (m.professions) {
+                        m.professions.forEach(p => profSet.add(p));
+                    }
+                });
+
+                allProfessions = Array.from(profSet).sort();
+                document.getElementById('professionSuggestions').innerHTML = allProfessions.map(p => `<option value="${p}">`).join('');
+                document.getElementById('totalMembres').textContent = allMembers.length;
+
+                const sortedMembers = [...allMembers].sort((a, b) => {
+                    const dateA = a.dateInscription ? a.dateInscription.toDate ? a.dateInscription.toDate().getTime() : 0 : 0;
+                    const dateB = b.dateInscription ? b.dateInscription.toDate ? b.dateInscription.toDate().getTime() : 0 : 0;
+                    return dateB - dateA;
+                });
+
+                const topMembers = sortedMembers.slice(0, 15);
+                displayMembers(topMembers);
+
+            } catch (error) {
+                showToast('Erreur de chargement: ' + error.message, 'error');
+                document.getElementById('membersGrid').innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-exclamation-triangle"></i>
+                        <p>Erreur de chargement</p>
+                        <button class="btn btn-sm btn-primary mt-2" onclick="loadAllMembers()">
+                            <i class="bi bi-arrow-clockwise"></i> Réessayer
+                        </button>
+                    </div>
+                `;
+            }
+            showLoading(false);
+        }
+
+        // ===== AFFICHER LES MEMBRES =====
+        function displayMembers(members) {
+            const container = document.getElementById('membersGrid');
+
+            if (members.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <i class="bi bi-search"></i>
+                        <p>Aucun membre trouvé</p>
+                        <button class="btn btn-sm btn-primary mt-2" onclick="resetFilters()">
+                            <i class="bi bi-arrow-clockwise"></i> Voir tous
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            members.forEach((m, index) => {
+                const roleClass = getRoleClass(m.responsabilite);
+                const roleLabel = getRoleLabel(m.responsabilite);
+                const photo = m.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile';
+                const professions = m.professions ? m.professions.slice(0, 2).map(p =>
+                    `<span class="profession-tag">${p}</span>`
+                ).join('') : '';
+                const hasMore = m.professions && m.professions.length > 2;
+                const isPopular = index < 3;
+
+                html += `
+                    <div class="member-card" onclick="showDetail('${m.id}')">
+                        <span class="card-badge ${isPopular ? 'popular' : ''}">
+                            ${isPopular ? '<i class="bi bi-star-fill"></i>' : `#${index + 1}`}
+                        </span>
+                        <div class="card-avatar">
+                            <img src="${photo}" alt="${m.nom}">
+                        </div>
+                        <div class="card-name">${m.nom || 'N/A'}</div>
+                        <div class="card-role">
+                            <span class="badge-role ${roleClass}">${roleLabel}</span>
+                        </div>
+                        <div class="card-professions">
+                            ${professions}
+                            ${hasMore ? `<span class="profession-tag">+${m.professions.length - 2}</span>` : ''}
+                        </div>
+                        <div class="card-location">
+                            <i class="bi bi-geo-alt"></i> ${m.adresse || 'N/A'}
+                        </div>
+                        <div class="card-status">
+                            <i class="bi bi-check-circle-fill"></i> Actif
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // ===== FILTRES =====
+        window.applyFilters = function() {
+            const profession = document.getElementById('filterProfession').value.trim().toLowerCase();
+            const quartier = document.getElementById('filterQuartier').value.trim().toLowerCase();
+
+            let results = allMembers;
+
+            if (profession) {
+                results = results.filter(m =>
+                    m.professions && m.professions.some(p => p.toLowerCase().includes(profession))
+                );
+            }
+
+            if (quartier) {
+                results = results.filter(m =>
+                    m.adresse && m.adresse.toLowerCase().includes(quartier)
+                );
+            }
+
+            results.sort((a, b) => {
+                const dateA = a.dateInscription ? a.dateInscription.toDate ? a.dateInscription.toDate().getTime() : 0 : 0;
+                const dateB = b.dateInscription ? b.dateInscription.toDate ? b.dateInscription.toDate().getTime() : 0 : 0;
+                return dateB - dateA;
+            });
+
+            displayMembers(results);
+
+            if (results.length === 0) {
+                showToast('Aucun résultat', 'error');
+            } else {
+                showToast(`${results.length} membre(s) trouvé(s)`, 'success');
+            }
+        };
+
+        // ===== RÉINITIALISER =====
+        window.resetFilters = function() {
+            document.getElementById('filterProfession').value = '';
+            document.getElementById('filterQuartier').value = '';
+
+            const sortedMembers = [...allMembers].sort((a, b) => {
+                const dateA = a.dateInscription ? a.dateInscription.toDate ? a.dateInscription.toDate().getTime() : 0 : 0;
+                const dateB = b.dateInscription ? b.dateInscription.toDate ? b.dateInscription.toDate().getTime() : 0 : 0;
+                return dateB - dateA;
+            });
+            const topMembers = sortedMembers.slice(0, 15);
+            displayMembers(topMembers);
+            showToast('Affichage des membres les plus sollicités', 'success');
+        };
+
+        // ===== GESTION DU DOCUMENT =====
+        function openDocument() {
+            if (currentDocumentUrl) {
+                window.open(currentDocumentUrl, '_blank');
+            }
+        }
+
+        function toggleEmbed() {
+            const embedded = document.getElementById('docEmbedded');
+            const btn = document.getElementById('toggleEmbedBtn');
+            if (embedded.style.display === 'none') {
+                if (currentDocumentUrl) {
+                    document.getElementById('docIframe').src = currentDocumentUrl;
+                    embedded.style.display = 'block';
+                    btn.innerHTML = '<i class="bi bi-eye-slash"></i> Masquer l\'aperçu';
+                }
+            } else {
+                embedded.style.display = 'none';
+                document.getElementById('docIframe').src = '';
+                btn.innerHTML = '<i class="bi bi-eye"></i> Aperçu rapide';
+            }
+        }
+
+        // ===== AFFICHER LE DÉTAIL (dans overlay) =====
+        window.showDetail = function(id) {
+            const member = allMembers.find(m => m.id === id);
+            if (!member) {
+                showToast('Membre non trouvé', 'error');
+                return;
+            }
+
+            selectedMemberId = id;
+            const overlay = document.getElementById('detailOverlay');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            const photo = member.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile';
+            document.getElementById('detailPhoto').src = photo;
+            document.getElementById('detailNom').textContent = member.nom || 'N/A';
+
+            const roleClass = getRoleClass(member.responsabilite);
+            const roleLabel = getRoleLabel(member.responsabilite);
+            const roleBadge = document.getElementById('detailResponsabilite');
+            roleBadge.textContent = roleLabel;
+            roleBadge.className = `badge-role ${roleClass}`;
+
+            const champDistrict = `${member.champ || ''} ${member.district ? '· ' + member.district : ''}`;
+            document.getElementById('detailChampDistrict').textContent = champDistrict || 'N/A';
+
+            const grid = document.getElementById('detailInfoGrid');
+            const professionsHtml = member.professions && member.professions.length > 0
+                ? member.professions.map(p => `<span class="profession-tag">${p}</span>`).join(' ')
+                : 'Non renseigné';
+
+            grid.innerHTML = `
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-geo-alt"></i> Champ</span>
+                    <span class="value">${member.champ || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-map"></i> District</span>
+                    <span class="value">${member.district || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-people"></i> Communauté</span>
+                    <span class="value">${member.communaute || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-calendar3"></i> Âge</span>
+                    <span class="value">${member.age || 'N/A'} ans</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-gender-ambiguous"></i> Genre</span>
+                    <span class="value">${member.genre || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item">
+                    <span class="label"><i class="bi bi-mortarboard"></i> Niveau</span>
+                    <span class="value">${member.niveauEtudes || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-briefcase"></i> Professions</span>
+                    <div class="detail-professions">${professionsHtml}</div>
+                </div>
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-house"></i> Adresse</span>
+                    <span class="value">${member.adresse || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-pin-map"></i> Référence</span>
+                    <span class="value">${member.adresseRef || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-telephone"></i> Téléphone</span>
+                    <span class="value">${member.telephone || 'N/A'}</span>
+                </div>
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-whatsapp"></i> WhatsApp</span>
+                    <span class="value">${member.whatsapp || 'N/A'}</span>
+                </div>
+                ${member.tiktok ? `
+                <div class="detail-info-item full-width">
+                    <span class="label"><i class="bi bi-tiktok"></i> TikTok</span>
+                    <span class="value">@${member.tiktok.replace('@', '')}</span>
+                </div>
+                ` : ''}
+            `;
+
+            // ===== GESTION DU DOCUMENT =====
+            const docSection = document.getElementById('detailDocumentSection');
+            const embedded = document.getElementById('docEmbedded');
+            const iframe = document.getElementById('docIframe');
+            const fileName = document.getElementById('docFileName');
+            const toggleBtn = document.getElementById('toggleEmbedBtn');
+
+            // Réinitialiser l'aperçu
+            embedded.style.display = 'none';
+            iframe.src = '';
+            toggleBtn.innerHTML = '<i class="bi bi-eye"></i> Aperçu rapide';
+
+            if (member.document) {
+                currentDocumentUrl = member.document;
+                docSection.style.display = 'block';
+                // Extraire le nom du fichier à partir de l'URL
+                const urlParts = member.document.split('/');
+                let name = urlParts[urlParts.length - 1];
+                name = decodeURIComponent(name).split('?')[0] || 'Document';
+                fileName.textContent = name;
+            } else {
+                currentDocumentUrl = '';
+                docSection.style.display = 'none';
+            }
+
+            // ===== CONTACTS =====
+            const contactDiv = document.getElementById('detailContact');
+            const whatsappNumber = cleanPhoneNumber(member.whatsapp);
+            const whatsappLink = whatsappNumber ? `https://wa.me/${whatsappNumber}` : null;
+            const phoneNumber = cleanPhoneNumber(member.telephone);
+            const phoneLink = phoneNumber ? `tel:${phoneNumber}` : null;
+            const tiktokLink = member.tiktok ? `https://www.tiktok.com/@${member.tiktok.replace('@', '')}` : null;
+
+            let contactHtml = '';
+            if (phoneLink) contactHtml += `<a href="${phoneLink}" class="btn btn-phone"><i class="bi bi-telephone-fill"></i> Appeler</a>`;
+            if (whatsappLink) contactHtml += `<a href="${whatsappLink}" target="_blank" class="btn btn-whatsapp"><i class="bi bi-whatsapp"></i> WhatsApp</a>`;
+            if (tiktokLink) contactHtml += `<a href="${tiktokLink}" target="_blank" class="btn btn-tiktok"><i class="bi bi-tiktok"></i> TikTok</a>`;
+
+            contactDiv.innerHTML = contactHtml || '<span class="text-muted">Aucun contact disponible</span>';
+        };
+
+        // ===== FERMER LE DÉTAIL =====
+        window.closeDetail = function() {
+            document.getElementById('detailOverlay').classList.remove('active');
+            document.body.style.overflow = '';
+            selectedMemberId = null;
+            // Réinitialiser l'aperçu du document
+            document.getElementById('docEmbedded').style.display = 'none';
+            document.getElementById('docIframe').src = '';
+            document.getElementById('toggleEmbedBtn').innerHTML = '<i class="bi bi-eye"></i> Aperçu rapide';
+        };
+
+        // ===== RECHERCHE EN TEMPS RÉEL =====
+        document.getElementById('filterProfession')?.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') applyFilters();
+        });
+        document.getElementById('filterQuartier')?.addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') applyFilters();
+        });
+
+        // ===== INIT =====
+        document.addEventListener('DOMContentLoaded', loadAllMembers);
+    </script>
+</body>
+</html>
