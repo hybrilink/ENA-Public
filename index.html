@@ -332,12 +332,8 @@
             animation: pulse-voice 1s infinite;
         }
         @keyframes pulse-voice {
-            0%, 100% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.08);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
         }
 
         .search-hint {
@@ -380,6 +376,11 @@
             background: rgba(42, 125, 225, 0.06);
             border-color: var(--accent-blue);
             color: var(--accent-blue);
+        }
+        .hint-tag.ocr-suggestion {
+            background: rgba(106, 27, 154, 0.08);
+            border-color: #6a1b9a;
+            color: #6a1b9a;
         }
 
         /* ============================================================
@@ -494,8 +495,6 @@
             position: absolute;
             top: 6px;
             right: 6px;
-            background: var(--accent-gold);
-            color: var(--primary-dark);
             padding: 1px 8px;
             border-radius: 30px;
             font-size: 0.4rem;
@@ -515,6 +514,10 @@
         }
         .member-card .card-badge.favorite {
             background: #e74c5e;
+            color: #fff;
+        }
+        .member-card .card-badge.ocr-match {
+            background: #6a1b9a;
             color: #fff;
         }
         .member-card .card-badge i {
@@ -585,46 +588,16 @@
             font-size: 0.45rem;
             font-weight: 700;
         }
-        .badge-role.frere {
-            background: #17a2b8;
-            color: #fff;
-        }
-        .badge-role.soeur {
-            background: #e83e8c;
-            color: #fff;
-        }
-        .badge-role.diacre {
-            background: #6f42c1;
-            color: #fff;
-        }
-        .badge-role.pretre {
-            background: #dc3545;
-            color: #fff;
-        }
-        .badge-role.rsd {
-            background: #fd7e14;
-            color: #fff;
-        }
-        .badge-role.berger {
-            background: #28a745;
-            color: #fff;
-        }
-        .badge-role.evangeliste {
-            background: #20c997;
-            color: #fff;
-        }
-        .badge-role.leade {
-            background: #0d6efd;
-            color: #fff;
-        }
-        .badge-role.anciens {
-            background: #6c757d;
-            color: #fff;
-        }
-        .badge-role.rd {
-            background: #e83e8c;
-            color: #fff;
-        }
+        .badge-role.frere { background: #17a2b8; color: #fff; }
+        .badge-role.soeur { background: #e83e8c; color: #fff; }
+        .badge-role.diacre { background: #6f42c1; color: #fff; }
+        .badge-role.pretre { background: #dc3545; color: #fff; }
+        .badge-role.rsd { background: #fd7e14; color: #fff; }
+        .badge-role.berger { background: #28a745; color: #fff; }
+        .badge-role.evangeliste { background: #20c997; color: #fff; }
+        .badge-role.leade { background: #0d6efd; color: #fff; }
+        .badge-role.anciens { background: #6c757d; color: #fff; }
+        .badge-role.rd { background: #e83e8c; color: #fff; }
 
         .member-card .card-professions {
             display: flex;
@@ -642,6 +615,10 @@
         }
         .member-card .card-professions .profession-tag.highlight {
             background: var(--accent-blue);
+            color: #fff;
+        }
+        .member-card .card-professions .profession-tag.ocr-tag {
+            background: #6a1b9a;
             color: #fff;
         }
 
@@ -738,6 +715,30 @@
             color: #e74c5e;
         }
 
+        .ocr-badge-small {
+            font-size: 0.35rem;
+            background: #6a1b9a;
+            color: #fff;
+            padding: 1px 6px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            margin-left: 4px;
+        }
+
+        .domain-indicator {
+            font-size: 0.35rem;
+            background: rgba(106, 27, 154, 0.1);
+            color: #6a1b9a;
+            padding: 1px 6px;
+            border-radius: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 2px;
+            border: 1px solid rgba(106, 27, 154, 0.2);
+        }
+
         /* ============================================================
                EMPTY STATE
             ============================================================ */
@@ -792,22 +793,12 @@
             position: relative;
         }
         @keyframes slideUp {
-            from {
-                transform: translateY(60px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            from { transform: translateY(60px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         .detail-window .detail-header {
@@ -1078,6 +1069,65 @@
             font-size: 0.55rem;
             font-weight: 500;
         }
+        .detail-window .detail-professions-list .profession-tag.ocr-tag {
+            background: #6a1b9a;
+        }
+
+        .detail-window .detail-ocr-section {
+            background: #f3e5f5;
+            border-radius: 10px;
+            padding: 10px 14px;
+            border: 2px solid #6a1b9a;
+            margin-bottom: 10px;
+        }
+        .detail-window .detail-ocr-section .ocr-label {
+            font-size: 0.45rem;
+            font-weight: 700;
+            color: #6a1b9a;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+        .detail-window .detail-ocr-section .ocr-domains {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-bottom: 4px;
+        }
+        .detail-window .detail-ocr-section .domain-tag {
+            padding: 2px 10px;
+            background: #6a1b9a;
+            color: #fff;
+            border-radius: 15px;
+            font-size: 0.5rem;
+            font-weight: 600;
+        }
+        .detail-window .detail-ocr-section .skill-tag {
+            padding: 2px 8px;
+            background: var(--accent-blue);
+            color: #fff;
+            border-radius: 15px;
+            font-size: 0.5rem;
+            font-weight: 500;
+        }
+        .detail-window .detail-ocr-section .ocr-resume {
+            font-size: 0.6rem;
+            color: #444;
+            margin-top: 4px;
+            padding: 6px 10px;
+            background: #fff;
+            border-radius: 6px;
+            border: 1px solid #e0d5e8;
+        }
+        .detail-window .detail-ocr-section .ocr-confidence {
+            font-size: 0.45rem;
+            color: #888;
+            margin-top: 3px;
+            text-align: right;
+        }
 
         .detail-window .detail-document {
             background: #f0f7ff;
@@ -1164,26 +1214,11 @@
         .detail-window .detail-contact .btn:active {
             transform: scale(0.95);
         }
-        .btn-whatsapp {
-            background: #25D366;
-            color: #fff;
-        }
-        .btn-phone {
-            background: #34B7F1;
-            color: #fff;
-        }
-        .btn-tiktok {
-            background: #000;
-            color: #fff;
-        }
-        .btn-doc {
-            background: var(--accent-blue);
-            color: #fff;
-        }
-        .btn-share {
-            background: var(--primary-dark);
-            color: #fff;
-        }
+        .btn-whatsapp { background: #25D366; color: #fff; }
+        .btn-phone { background: #34B7F1; color: #fff; }
+        .btn-tiktok { background: #000; color: #fff; }
+        .btn-doc { background: var(--accent-blue); color: #fff; }
+        .btn-share { background: var(--primary-dark); color: #fff; }
 
         /* ============================================================
                LOADING / TOAST / CONFETTI
@@ -1260,14 +1295,8 @@
         }
 
         @keyframes slideIn {
-            from {
-                transform: translateY(30px) scale(0.95);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0) scale(1);
-                opacity: 1;
-            }
+            from { transform: translateY(30px) scale(0.95); opacity: 0; }
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
         .confetti-container {
@@ -1288,14 +1317,8 @@
             animation: confettiFall 1.5s ease-out forwards;
         }
         @keyframes confettiFall {
-            0% {
-                transform: translateY(-20px) rotate(0deg) scale(1);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(400px) rotate(720deg) scale(0);
-                opacity: 0;
-            }
+            0% { transform: translateY(-20px) rotate(0deg) scale(1); opacity: 1; }
+            100% { transform: translateY(400px) rotate(720deg) scale(0); opacity: 0; }
         }
 
         /* ============================================================
@@ -1420,291 +1443,87 @@
                 grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
                 gap: 8px;
             }
-            .member-card .card-avatar {
-                height: 115px;
-            }
-            .member-card .card-body {
-                padding: 6px 6px 3px;
-            }
-            .member-card .card-name {
-                font-size: 0.7rem;
-            }
-            .member-card .card-badge {
-                font-size: 0.35rem;
-                padding: 1px 6px;
-                top: 4px;
-                right: 4px;
-            }
-            .member-card .card-professions .profession-tag {
-                font-size: 0.35rem;
-                padding: 1px 4px;
-            }
-            .member-card .card-role .badge-role {
-                font-size: 0.4rem;
-                padding: 1px 6px;
-            }
-            .member-card .card-location {
-                font-size: 0.4rem;
-            }
-            .member-card .card-likes .like-btn {
-                font-size: 0.7rem;
-            }
-            .member-card .card-avatar .like-badge {
-                width: 20px;
-                height: 20px;
-                font-size: 0.4rem;
-                bottom: 4px;
-                right: 4px;
-            }
-            .member-card .card-actions .action-btn {
-                font-size: 0.6rem;
-            }
+            .member-card .card-avatar { height: 115px; }
+            .member-card .card-body { padding: 6px 6px 3px; }
+            .member-card .card-name { font-size: 0.7rem; }
+            .member-card .card-badge { font-size: 0.35rem; padding: 1px 6px; top: 4px; right: 4px; }
+            .member-card .card-professions .profession-tag { font-size: 0.35rem; padding: 1px 4px; }
+            .member-card .card-role .badge-role { font-size: 0.4rem; padding: 1px 6px; }
+            .member-card .card-location { font-size: 0.4rem; }
+            .member-card .card-likes .like-btn { font-size: 0.7rem; }
+            .member-card .card-avatar .like-badge { width: 20px; height: 20px; font-size: 0.4rem; bottom: 4px; right: 4px; }
+            .member-card .card-actions .action-btn { font-size: 0.6rem; }
 
-            .detail-window .detail-header {
-                height: 170px;
-            }
-            .detail-window .detail-info-overlay h2 {
-                font-size: 0.95rem;
-            }
-            .detail-window .detail-info-grid {
-                grid-template-columns: 1fr;
-                gap: 4px;
-            }
-            .detail-window .detail-contact .btn {
-                min-width: 60px;
-                padding: 4px 10px;
-                font-size: 0.55rem;
-            }
-            .detail-window .detail-like-badge-top {
-                width: 28px;
-                height: 28px;
-                font-size: 0.65rem;
-                bottom: 10px;
-                right: 10px;
-            }
+            .detail-window .detail-header { height: 170px; }
+            .detail-window .detail-info-overlay h2 { font-size: 0.95rem; }
+            .detail-window .detail-info-grid { grid-template-columns: 1fr; gap: 4px; }
+            .detail-window .detail-contact .btn { min-width: 60px; padding: 4px 10px; font-size: 0.55rem; }
+            .detail-window .detail-like-badge-top { width: 28px; height: 28px; font-size: 0.65rem; bottom: 10px; right: 10px; }
 
-            .hero-section h1 {
-                font-size: 0.9rem;
-            }
-            .header-title {
-                font-size: 0.8rem;
-            }
-            .header-badge {
-                font-size: 0.45rem;
-                padding: 2px 8px;
-            }
-            .btn-ai-search {
-                font-size: 0.6rem;
-                padding: 6px 10px;
-                min-height: 38px;
-            }
-            .search-input-wrapper input {
-                font-size: 0.7rem;
-                padding: 8px 10px 8px 32px;
-                min-height: 38px;
-            }
-            .search-input-wrapper .ai-badge {
-                font-size: 0.4rem;
-                padding: 1px 5px;
-            }
-            .filter-row .form-control {
-                font-size: 0.5rem;
-                height: 26px;
-                padding: 2px 6px;
-            }
-            .filter-row .btn-primary,
-            .filter-row .btn-outline-secondary {
-                font-size: 0.5rem;
-                height: 26px;
-                padding: 2px 6px;
-            }
-            .filter-section {
-                top: 108px;
-                padding: 3px 10px;
-            }
-            .ai-search-section {
-                top: 60px;
-                padding: 6px 10px 4px;
-            }
-            .search-hint {
-                margin-top: 3px;
-                padding-top: 3px;
-            }
-            .header-logo {
-                width: 28px;
-                height: 28px;
-                font-size: 11px;
-            }
-            .toast-container {
-                width: 96%;
-                bottom: calc(8px + var(--safe-bottom));
-            }
-            .toast-custom {
-                padding: 6px 10px;
-                font-size: 0.6rem;
-                border-radius: 10px;
-            }
-            .btn-voice {
-                width: 38px;
-                height: 38px;
-                font-size: 0.85rem;
-            }
-            .favorites-panel {
-                padding: 12px 14px calc(12px + var(--safe-bottom));
-            }
-            .main-content {
-                padding: 6px 6px calc(70px + var(--safe-bottom));
-            }
-            .detail-window .detail-likes-section .like-btn-big {
-                font-size: 0.65rem;
-                padding: 4px 12px;
-                min-height: 32px;
-            }
-            .detail-window .detail-likes-section .likes-info .like-icon-big {
-                font-size: 1.2rem;
-            }
-            .detail-window .detail-likes-section .likes-info .like-stats .like-count-big {
-                font-size: 0.9rem;
-            }
+            .hero-section h1 { font-size: 0.9rem; }
+            .header-title { font-size: 0.8rem; }
+            .header-badge { font-size: 0.45rem; padding: 2px 8px; }
+            .btn-ai-search { font-size: 0.6rem; padding: 6px 10px; min-height: 38px; }
+            .search-input-wrapper input { font-size: 0.7rem; padding: 8px 10px 8px 32px; min-height: 38px; }
+            .search-input-wrapper .ai-badge { font-size: 0.4rem; padding: 1px 5px; }
+            .filter-row .form-control { font-size: 0.5rem; height: 26px; padding: 2px 6px; }
+            .filter-row .btn-primary, .filter-row .btn-outline-secondary { font-size: 0.5rem; height: 26px; padding: 2px 6px; }
+            .filter-section { top: 108px; padding: 3px 10px; }
+            .ai-search-section { top: 60px; padding: 6px 10px 4px; }
+            .search-hint { margin-top: 3px; padding-top: 3px; }
+            .header-logo { width: 28px; height: 28px; font-size: 11px; }
+            .toast-container { width: 96%; bottom: calc(8px + var(--safe-bottom)); }
+            .toast-custom { padding: 6px 10px; font-size: 0.6rem; border-radius: 10px; }
+            .btn-voice { width: 38px; height: 38px; font-size: 0.85rem; }
+            .favorites-panel { padding: 12px 14px calc(12px + var(--safe-bottom)); }
+            .main-content { padding: 6px 6px calc(70px + var(--safe-bottom)); }
+            .detail-window .detail-likes-section .like-btn-big { font-size: 0.65rem; padding: 4px 12px; min-height: 32px; }
+            .detail-window .detail-likes-section .likes-info .like-icon-big { font-size: 1.2rem; }
+            .detail-window .detail-likes-section .likes-info .like-stats .like-count-big { font-size: 0.9rem; }
         }
 
         @media (max-width: 400px) {
-            .members-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 5px;
-            }
-            .member-card .card-avatar {
-                height: 95px;
-            }
-            .member-card .card-professions .profession-tag {
-                font-size: 0.3rem;
-                padding: 1px 3px;
-            }
-            .member-card .card-role .badge-role {
-                font-size: 0.35rem;
-                padding: 1px 4px;
-            }
-            .member-card .card-avatar .like-badge {
-                width: 18px;
-                height: 18px;
-                font-size: 0.35rem;
-            }
-            .member-card .card-name {
-                font-size: 0.6rem;
-            }
-            .member-card .card-location {
-                font-size: 0.35rem;
-            }
-            .member-card .card-likes .like-btn {
-                font-size: 0.6rem;
-            }
-            .member-card .card-actions .action-btn {
-                font-size: 0.55rem;
-            }
-            .detail-window .detail-header {
-                height: 140px;
-            }
-            .detail-window .detail-contact {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .detail-window .detail-contact .btn {
-                width: 100%;
-            }
-            .search-container {
-                flex-wrap: wrap;
-            }
-            .btn-ai-search {
-                width: 100%;
-                justify-content: center;
-            }
-            .filter-row {
-                flex-direction: column;
-                align-items: stretch;
-                gap: 4px;
-            }
-            .filter-row .d-flex {
-                width: 100%;
-            }
-            .filter-row .form-control {
-                width: 100% !important;
-            }
-            .filter-row .btn-primary,
-            .filter-row .btn-outline-secondary {
-                flex: 1;
-                justify-content: center;
-            }
-            .header-sub {
-                font-size: 0.4rem;
-            }
-            .header-badge {
-                font-size: 0.4rem;
-                padding: 1px 6px;
-            }
-            .header-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 0.75rem;
-            }
-            .header-logo {
-                width: 24px;
-                height: 24px;
-                font-size: 10px;
-            }
-            .header-title {
-                font-size: 0.7rem;
-            }
+            .members-grid { grid-template-columns: 1fr 1fr; gap: 5px; }
+            .member-card .card-avatar { height: 95px; }
+            .member-card .card-professions .profession-tag { font-size: 0.3rem; padding: 1px 3px; }
+            .member-card .card-role .badge-role { font-size: 0.35rem; padding: 1px 4px; }
+            .member-card .card-avatar .like-badge { width: 18px; height: 18px; font-size: 0.35rem; }
+            .member-card .card-name { font-size: 0.6rem; }
+            .member-card .card-location { font-size: 0.35rem; }
+            .member-card .card-likes .like-btn { font-size: 0.6rem; }
+            .member-card .card-actions .action-btn { font-size: 0.55rem; }
+            .detail-window .detail-header { height: 140px; }
+            .detail-window .detail-contact { flex-direction: column; align-items: stretch; }
+            .detail-window .detail-contact .btn { width: 100%; }
+            .search-container { flex-wrap: wrap; }
+            .btn-ai-search { width: 100%; justify-content: center; }
+            .filter-row { flex-direction: column; align-items: stretch; gap: 4px; }
+            .filter-row .d-flex { width: 100%; }
+            .filter-row .form-control { width: 100% !important; }
+            .filter-row .btn-primary, .filter-row .btn-outline-secondary { flex: 1; justify-content: center; }
+            .header-sub { font-size: 0.4rem; }
+            .header-badge { font-size: 0.4rem; padding: 1px 6px; }
+            .header-btn { width: 30px; height: 30px; font-size: 0.75rem; }
+            .header-logo { width: 24px; height: 24px; font-size: 10px; }
+            .header-title { font-size: 0.7rem; }
         }
 
         @media (min-width: 768px) {
-            .members-grid {
-                grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-                gap: 16px;
-            }
-            .member-card .card-avatar {
-                height: 180px;
-            }
-            .main-content {
-                padding: 16px 24px calc(80px + var(--safe-bottom));
-            }
-            .hero-section {
-                padding: 24px 40px 18px;
-            }
-            .hero-section h1 {
-                font-size: 1.3rem;
-            }
-            .detail-window {
-                border-radius: 20px;
-                margin: 24px;
-                max-height: 85vh;
-            }
-            .detail-overlay {
-                align-items: center;
-            }
-            .detail-window .detail-header {
-                border-radius: 20px 20px 0 0;
-                height: 240px;
-            }
-            .detail-window .detail-close-btn {
-                top: 16px;
-                right: 16px;
-            }
+            .members-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+            .member-card .card-avatar { height: 180px; }
+            .main-content { padding: 16px 24px calc(80px + var(--safe-bottom)); }
+            .hero-section { padding: 24px 40px 18px; }
+            .hero-section h1 { font-size: 1.3rem; }
+            .detail-window { border-radius: 20px; margin: 24px; max-height: 85vh; }
+            .detail-overlay { align-items: center; }
+            .detail-window .detail-header { border-radius: 20px 20px 0 0; height: 240px; }
+            .detail-window .detail-close-btn { top: 16px; right: 16px; }
         }
 
-        .detail-window::-webkit-scrollbar {
-            width: 4px;
-        }
-        .detail-window::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .detail-window::-webkit-scrollbar-thumb {
-            background: var(--accent-blue);
-            border-radius: 10px;
-        }
+        .detail-window::-webkit-scrollbar { width: 4px; }
+        .detail-window::-webkit-scrollbar-track { background: transparent; }
+        .detail-window::-webkit-scrollbar-thumb { background: var(--accent-blue); border-radius: 10px; }
 
-        /* ============================================================
-               TOUCH FEEDBACK
-            ============================================================ */
         .touch-feedback:active {
             transform: scale(0.95);
             transition: transform 0.05s;
@@ -1777,6 +1596,18 @@
                 <!-- INFOS -->
                 <div class="detail-info-grid" id="detailInfoGrid"></div>
 
+                <!-- OCR SECTION avec analyse contextuelle -->
+                <div class="detail-ocr-section" id="detailOcrSection" style="display:none;">
+                    <div class="ocr-label"><i class="fas fa-brain"></i> Analyse IA de l'affiche</div>
+                    <div class="ocr-domains" id="detailOcrDomains"></div>
+                    <div style="font-size:0.45rem; font-weight:600; color:#6a1b9a; text-transform:uppercase; letter-spacing:0.3px; margin:4px 0 2px;">
+                        <i class="fas fa-tools"></i> Compétences
+                    </div>
+                    <div id="detailOcrSkills" style="display:flex; flex-wrap:wrap; gap:3px;"></div>
+                    <div class="ocr-resume" id="detailOcrResume"></div>
+                    <div class="ocr-confidence" id="detailOcrConfidence"></div>
+                </div>
+
                 <!-- DOCUMENT -->
                 <div id="detailDocumentSection" style="display:none;" class="detail-document">
                     <div class="doc-label"><i class="fas fa-image"></i> Document joint</div>
@@ -1817,7 +1648,7 @@
     <!-- ===== HERO ===== -->
     <div class="hero-section">
         <h1><i class="fas fa-search"></i> Trouvez un professionnel</h1>
-        <p>Parlez, tapez ou géolocalisez-vous pour trouver le bon expert</p>
+        <p>L'IA lit les affiches pour vous trouver le bon expert</p>
     </div>
 
     <!-- ===== RECHERCHE AI ===== -->
@@ -1877,10 +1708,8 @@
     </div>
 
     <!-- ===== FIREBASE ===== -->
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js">
-    </script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js">
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
     <script>
         // ============================================================
@@ -2015,6 +1844,8 @@
                     locations = [];
                 results.forEach(m => {
                     if (m.professions) m.professions.forEach(p => { if (!professions.includes(p)) professions.push(p); });
+                    if (m.ocrDomains) m.ocrDomains.forEach(d => { if (!professions.includes(d)) professions.push(d); });
+                    if (m.ocrSkills) m.ocrSkills.forEach(s => { if (!professions.includes(s)) professions.push(s); });
                     if (m.adresse) {
                         ['kinshasa', 'lubumbashi', 'mbuji-mayi', 'kananga', 'kisangani', 'goma', 'bukavu', 'kolwezi',
                             'likasi'
@@ -2245,7 +2076,7 @@
         }
 
         // ============================================================
-        // 8. RECHERCHE GROQ AVEC DEEPSEEK R1
+        // 8. RECHERCHE GROQ AVEC CONTEXTE OCR
         // ============================================================
         async function performGroqSearch() {
             const query = document.getElementById('aiSearchInput').value.trim();
@@ -2258,10 +2089,19 @@
             showLoading(true);
             try {
                 const memorySuggestion = ai.suggest(query);
+                
+                // Récupérer tous les domaines et compétences OCR disponibles
+                const allDomains = new Set();
+                const allSkills = new Set();
+                allMembers.forEach(m => {
+                    if (m.ocrDomains) m.ocrDomains.forEach(d => allDomains.add(d));
+                    if (m.ocrSkills) m.ocrSkills.forEach(s => allSkills.add(s));
+                });
                 const allProfessionsList = allProfessions.join(', ');
-                const allRoles = ['frere', 'soeur', 'diacre', 'pretre', 'rsd', 'berger', 'evangeliste', 'leade', 'anciens',
-                    'rd'
-                ];
+                const allDomainsList = Array.from(allDomains).join(', ');
+                const allSkillsList = Array.from(allSkills).join(', ');
+                
+                const allRoles = ['frere', 'soeur', 'diacre', 'pretre', 'rsd', 'berger', 'evangeliste', 'leade', 'anciens', 'rd'];
                 const allCities = ['Kinshasa', 'Lubumbashi', 'Mbuji-Mayi', 'Kananga', 'Kisangani', 'Goma', 'Bukavu',
                     'Kolwezi', 'Likasi', 'Tshikapa', 'Beni', 'Butembo', 'Mwene-Ditu', 'Kikwit', 'Mbandaka', 'Matadi',
                     'Uvira', 'Bunia', 'Isiro', 'Kamina', 'Kalemie', 'Kindu'
@@ -2274,26 +2114,39 @@
                 }
                 
                 const systemPrompt = `Tu es un assistant IA ultra-intelligent spécialisé dans la recherche de professionnels en RDC.
-${memoryContext}
-Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON valide (sans texte additionnel) avec cette structure :
-{
-  "professions": ["liste des professions les plus pertinentes"],
-  "locations": ["villes ou districts mentionnés"],
-  "responsabilite": "rôle dans l'église (frere, soeur, diacre, pretre, rsd, berger, evangeliste, leade, anciens, rd) ou vide",
-  "motsCles": ["mots clés supplémentaires"],
-  "niveaux": ["niveaux d'études mentionnés"],
-  "intention": "description de l'intention de l'utilisateur en 5 mots max"
-}
+Tu as accès à une base de données de membres avec leurs informations.
 
-📋 Données disponibles :
+${memoryContext}
+
+🔍 ANALYSE CONTEXTUELLE :
+- Les membres peuvent avoir des AFFICHES qui ont été analysées par IA
+- Les domaines d'activité extraits des affiches sont: ${allDomainsList || 'aucun'}
+- Les compétences extraites sont: ${allSkillsList || 'aucune'}
+- Les professions déclarées sont: ${allProfessionsList}
+
+📋 DONNÉES DISPONIBLES :
 - Professions existantes: ${allProfessionsList}
+- Domaines d'activité (OCR): ${allDomainsList || 'aucun'}
+- Compétences (OCR): ${allSkillsList || 'aucune'}
 - Rôles possibles: ${allRoles.join(', ')}
 - Villes: ${allCities.join(', ')}
 
+📤 FORMAT DE RÉPONSE (JSON UNIQUEMENT) :
+{
+  "professions": ["professions ciblées"],
+  "domaines": ["domaines d'activité ciblés (OCR)"],
+  "competences": ["compétences ciblées (OCR)"],
+  "locations": ["villes ou districts"],
+  "responsabilite": "rôle ou vide",
+  "motsCles": ["mots clés supplémentaires"],
+  "niveaux": ["niveaux d'études"],
+  "intention": "description de l'intention en 5 mots max"
+}
+
 🔑 RÈGLES IMPORTANTES :
 1. Sois précis et intelligent dans l'extraction des professions
-2. Si la requête est ambiguë, propose plusieurs professions liées
-3. Utilise la mémoire si elle est pertinente
+2. Utilise les domaines et compétences OCR quand c'est pertinent
+3. Si la requête est ambiguë, propose plusieurs options
 4. Retourne TOUJOURS un JSON valide`;
 
                 const response = await fetch(GROQ_CONFIG.endpoint, {
@@ -2302,7 +2155,7 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     body: JSON.stringify({
                         model: GROQ_CONFIG.model,
                         messages: [{ role: 'system', content: systemPrompt }, { role: 'user',
-                            content: `🔍 Recherche : "${query}"` }],
+                            content: `🔍 Recherche contextuelle : "${query}"` }],
                         temperature: 0.1,
                         max_tokens: 1024
                     })
@@ -2315,36 +2168,71 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     const content = data.choices[0].message.content;
                     const jsonMatch = content.match(/\{[\s\S]*\}/);
                     analysis = jsonMatch ? JSON.parse(jsonMatch[0]) : JSON.parse(content);
-                } catch (e) { 
+                } catch (e) {
                     console.error("Erreur parse JSON:", e);
-                    throw new Error("L'IA n'a pas retourné un JSON valide"); 
+                    throw new Error("L'IA n'a pas retourné un JSON valide");
                 }
-                console.log("🧠 Analyse DeepSeek:", analysis);
+                console.log("🧠 Analyse contextuelle DeepSeek:", analysis);
 
-                // ===== FILTRAGE INTELLIGENT =====
+                // ===== FILTRAGE CONTEXTUEL AVANCÉ =====
                 let results = [...allMembers];
                 const highlightTerms = [];
 
-                // 1. Filtrage par professions
+                // 1. Filtrage par professions déclarées
                 let searchProfessions = [];
                 if (analysis.professions && analysis.professions.length) {
                     searchProfessions = analysis.professions.map(p => p.toLowerCase());
                     highlightTerms.push(...searchProfessions);
                 }
-                if (memorySuggestion.confidence > 0.3) {
-                    memorySuggestion.professions.forEach(p => {
-                        if (!searchProfessions.some(sp => sp.includes(p.toLowerCase()) || p.toLowerCase().includes(sp))) 
-                            searchProfessions.push(p.toLowerCase());
-                    });
-                }
-                if (searchProfessions.length) {
-                    results = results.filter(m => m.professions && m.professions.some(p => {
-                        const pLower = p.toLowerCase();
-                        return searchProfessions.some(sp => pLower.includes(sp) || sp.includes(pLower));
-                    }));
+
+                // 2. Filtrage par domaines OCR
+                let searchDomains = [];
+                if (analysis.domaines && analysis.domaines.length) {
+                    searchDomains = analysis.domaines.map(d => d.toLowerCase());
+                    highlightTerms.push(...searchDomains);
                 }
 
-                // 2. Filtrage par localisation
+                // 3. Filtrage par compétences OCR
+                let searchSkills = [];
+                if (analysis.competences && analysis.competences.length) {
+                    searchSkills = analysis.competences.map(s => s.toLowerCase());
+                    highlightTerms.push(...searchSkills);
+                }
+
+                // 4. Filtrage avec tous les critères (professions + domaines + compétences)
+                if (searchProfessions.length || searchDomains.length || searchSkills.length) {
+                    results = results.filter(m => {
+                        let match = false;
+                        
+                        // Vérifier les professions déclarées
+                        if (m.professions) {
+                            match = match || m.professions.some(p => {
+                                const pLower = p.toLowerCase();
+                                return searchProfessions.some(sp => pLower.includes(sp) || sp.includes(pLower));
+                            });
+                        }
+                        
+                        // Vérifier les domaines OCR
+                        if (m.ocrDomains) {
+                            match = match || m.ocrDomains.some(d => {
+                                const dLower = d.toLowerCase();
+                                return searchDomains.some(sd => dLower.includes(sd) || sd.includes(dLower));
+                            });
+                        }
+                        
+                        // Vérifier les compétences OCR
+                        if (m.ocrSkills) {
+                            match = match || m.ocrSkills.some(s => {
+                                const sLower = s.toLowerCase();
+                                return searchSkills.some(ss => sLower.includes(ss) || ss.includes(sLower));
+                            });
+                        }
+                        
+                        return match;
+                    });
+                }
+
+                // 5. Filtrage par localisation
                 let searchLocations = [];
                 if (analysis.locations && analysis.locations.length) {
                     searchLocations = analysis.locations.map(l => l.toLowerCase());
@@ -2363,14 +2251,14 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     });
                 }
 
-                // 3. Filtrage par responsabilité
+                // 6. Filtrage par responsabilité
                 if (analysis.responsabilite && analysis.responsabilite.trim()) {
                     const role = analysis.responsabilite.toLowerCase();
                     highlightTerms.push(role);
                     results = results.filter(m => m.responsabilite && m.responsabilite.toLowerCase() === role);
                 }
 
-                // 4. Filtrage par niveaux d'études
+                // 7. Filtrage par niveaux d'études
                 if (analysis.niveaux && analysis.niveaux.length) {
                     const niveaux = analysis.niveaux.map(n => n.toLowerCase());
                     results = results.filter(m => {
@@ -2379,33 +2267,54 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     });
                 }
 
-                // 5. Recherche par mots-clés si pas de résultats
+                // 8. Recherche par mots-clés (incluant tout)
                 if (!results.length && analysis.motsCles && analysis.motsCles.length) {
                     const keywords = analysis.motsCles.map(k => k.toLowerCase());
                     highlightTerms.push(...keywords);
                     results = allMembers.filter(m => {
-                        const memberText = [m.nom || '', ...(m.professions || []), m.adresse || '', m.champ || '']
-                            .join(' ').toLowerCase();
+                        const memberText = [
+                            m.nom || '',
+                            ...(m.professions || []),
+                            ...(m.ocrDomains || []),
+                            ...(m.ocrSkills || []),
+                            m.adresse || '',
+                            m.champ || ''
+                        ].join(' ').toLowerCase();
                         return keywords.some(kw => memberText.includes(kw));
                     });
                 }
 
-                // 6. Fallback : recherche par mots simples
+                // 9. Fallback : recherche par mots simples avec tout le contexte
                 if (!results.length) {
                     const words = query.toLowerCase().split(' ').filter(w => w.length > 2);
                     results = allMembers.filter(m => {
-                        const memberText = [m.nom || '', ...(m.professions || []), m.adresse || '', m.champ || '']
-                            .join(' ').toLowerCase();
+                        const memberText = [
+                            m.nom || '',
+                            ...(m.professions || []),
+                            ...(m.ocrDomains || []),
+                            ...(m.ocrSkills || []),
+                            m.adresse || '',
+                            m.champ || '',
+                            m.ocrResume || ''
+                        ].join(' ').toLowerCase();
                         return words.some(w => memberText.includes(w));
                     });
                 }
 
-                // 7. Score de pertinence pour trier les résultats
+                // 10. Score de pertinence contextuel
                 results = results.map(m => {
                     let score = 0;
-                    const memberText = [m.nom || '', ...(m.professions || []), m.adresse || '', m.champ || '']
-                        .join(' ').toLowerCase();
+                    const memberText = [
+                        m.nom || '',
+                        ...(m.professions || []),
+                        ...(m.ocrDomains || []),
+                        ...(m.ocrSkills || []),
+                        m.adresse || '',
+                        m.champ || '',
+                        m.ocrResume || ''
+                    ].join(' ').toLowerCase();
                     
+                    // Score pour l'intention
                     if (analysis.intention) {
                         const intentionWords = analysis.intention.toLowerCase().split(' ');
                         intentionWords.forEach(word => {
@@ -2413,13 +2322,31 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                         });
                     }
                     
+                    // Score pour les professions
                     if (searchProfessions.length) {
                         m.professions?.forEach(p => {
-                            if (searchProfessions.some(sp => p.toLowerCase().includes(sp) || sp.includes(p.toLowerCase()))) 
+                            if (searchProfessions.some(sp => p.toLowerCase().includes(sp) || sp.includes(p.toLowerCase())))
                                 score += 20;
                         });
                     }
                     
+                    // Score pour les domaines OCR
+                    if (searchDomains.length) {
+                        m.ocrDomains?.forEach(d => {
+                            if (searchDomains.some(sd => d.toLowerCase().includes(sd) || sd.includes(d.toLowerCase())))
+                                score += 18;
+                        });
+                    }
+                    
+                    // Score pour les compétences OCR
+                    if (searchSkills.length) {
+                        m.ocrSkills?.forEach(s => {
+                            if (searchSkills.some(ss => s.toLowerCase().includes(ss) || ss.includes(s.toLowerCase())))
+                                score += 15;
+                        });
+                    }
+                    
+                    // Score pour la localisation
                     if (searchLocations.length) {
                         const locText = [m.adresse || '', m.district || ''].join(' ').toLowerCase();
                         searchLocations.forEach(loc => {
@@ -2427,18 +2354,39 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                         });
                     }
                     
+                    // Bonus pour la confiance OCR élevée
+                    if (m.ocrConfidence && m.ocrConfidence > 0.7) {
+                        score += 5;
+                    }
+                    
                     return { ...m, score };
                 }).sort((a, b) => b.score - a.score);
 
                 if (results.length) ai.learn(query, results, analysis);
-                displayMembers(results, highlightTerms);
+                
+                // Identifier les résultats avec correspondance OCR
+                const resultsWithContext = results.map(m => ({
+                    ...m,
+                    hasOcrMatch: (m.ocrDomains && m.ocrDomains.some(d => 
+                        query.toLowerCase().split(' ').some(w => d.toLowerCase().includes(w) || w.includes(d.toLowerCase()))
+                    )) || (m.ocrSkills && m.ocrSkills.some(s =>
+                        query.toLowerCase().split(' ').some(w => s.toLowerCase().includes(w) || w.includes(s.toLowerCase()))
+                    ))
+                }));
+                
+                displayMembers(resultsWithContext, highlightTerms);
                 
                 const levelEmoji = ['🔰', '⭐', '🌟', '💫', '✨', '🔥', '🚀', '🏆', '👑', '💎'];
                 const level = Math.min(ai.knowledge.stats.level - 1, 9);
                 if (!results.length) {
                     showToast(`😕 Aucun résultat pour "${query}"`, 'error');
                 } else {
-                    showToast(`✨ ${results.length} professionnel(s) trouvé(s) ${levelEmoji[level] || '⚡'} (Niveau ${ai.knowledge.stats.level})`, 'success');
+                    const ocrCount = results.filter(m => m.hasOcrMatch).length;
+                    let extraMsg = '';
+                    if (ocrCount > 0) {
+                        extraMsg = ` (${ocrCount} via analyse d'affiche 🧠)`;
+                    }
+                    showToast(`✨ ${results.length} professionnel(s) trouvé(s)${extraMsg} ${levelEmoji[level] || '⚡'} (Niveau ${ai.knowledge.stats.level})`, 'success');
                 }
             } catch (error) {
                 console.error("Erreur:", error);
@@ -2461,53 +2409,65 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     `<div class="empty-state"><i class="fas fa-search"></i><p>Aucun professionnel trouvé</p><button class="btn btn-sm btn-primary mt-2" onclick="resetFilters()"><i class="fas fa-undo-alt"></i> Voir tous</button></div>`;
                 return;
             }
-            const scored = members.map(m => {
-                let score = 0;
-                if (highlightTerms) {
-                    const memberText = [...(m.professions || []), m.responsabilite || '', m.adresse || ''].join(' ')
-                        .toLowerCase();
-                    highlightTerms.forEach(term => {
-                        if (memberText.includes(term.toLowerCase())) score += 10;
-                        if (m.professions && m.professions.some(p => p.toLowerCase().includes(term.toLowerCase())))
-                            score += 15;
-                        if (m.adresse && m.adresse.toLowerCase().includes(term.toLowerCase())) score += 8;
-                    });
-                }
-                return { ...m, score };
-            }).sort((a, b) => b.score - a.score);
-
+            
             let html = '';
-            scored.forEach((m, idx) => {
+            members.forEach((m, idx) => {
                 const roleClass = getRoleClass(m.responsabilite);
                 const roleLabel = getRoleLabel(m.responsabilite);
                 const photo = m.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile';
                 const isFav = isFavorite(m.id);
                 const likeData = getLikes(m.id);
                 const userLiked = hasUserLiked(m.id);
+                const hasOcrMatch = m.hasOcrMatch || false;
 
+                // Afficher les professions, domaines et compétences
                 let profHtml = '';
-                if (m.professions) {
-                    const display = m.professions.slice(0, 3);
-                    profHtml = display.map(p => {
-                        const highlight = highlightTerms && highlightTerms.some(term => p.toLowerCase()
-                            .includes(term) || term.includes(p.toLowerCase()));
-                        return `<span class="profession-tag ${highlight?'highlight':''}">${p}</span>`;
-                    }).join('');
-                    if (m.professions.length > 3) profHtml += `<span class="profession-tag">+${m.professions.length - 3}</span>`;
-                }
+                const allProfessions = [
+                    ...(m.professions || []),
+                    ...(m.ocrDomains || []).slice(0, 2),
+                    ...(m.ocrSkills || []).slice(0, 2)
+                ];
+                const uniqueProfessions = [...new Set(allProfessions)];
+                const display = uniqueProfessions.slice(0, 4);
+                profHtml = display.map(p => {
+                    const isHighlight = highlightTerms && highlightTerms.some(term => 
+                        p.toLowerCase().includes(term) || term.includes(p.toLowerCase())
+                    );
+                    const isOcr = (m.ocrDomains && m.ocrDomains.includes(p)) || (m.ocrSkills && m.ocrSkills.includes(p));
+                    let classNames = 'profession-tag';
+                    if (isHighlight) classNames += ' highlight';
+                    if (isOcr) classNames += ' ocr-tag';
+                    return `<span class="${classNames}">${p}</span>`;
+                }).join('');
+                if (uniqueProfessions.length > 4) profHtml += `<span class="profession-tag">+${uniqueProfessions.length - 4}</span>`;
 
                 let badgeClass = '',
                     badgeText = '';
-                if (isFav) { badgeClass = 'favorite';
-                    badgeText = '<i class="fas fa-heart"></i>'; } else if (idx < 3) { badgeClass = 'popular';
-                    badgeText = '<i class="fas fa-star"></i> Top'; } else if (highlightTerms && highlightTerms.length) { badgeClass =
-                        'ai-match';
-                    badgeText = '<i class="fas fa-stars"></i> IA'; } else { badgeText = `#${idx+1}`; }
+                if (isFav) {
+                    badgeClass = 'favorite';
+                    badgeText = '<i class="fas fa-heart"></i>';
+                } else if (idx < 3) {
+                    badgeClass = 'popular';
+                    badgeText = '<i class="fas fa-star"></i> Top';
+                } else if (hasOcrMatch) {
+                    badgeClass = 'ocr-match';
+                    badgeText = '<i class="fas fa-brain"></i> IA';
+                } else if (highlightTerms && highlightTerms.length) {
+                    badgeClass = 'ai-match';
+                    badgeText = '<i class="fas fa-stars"></i> IA';
+                } else {
+                    badgeText = `#${idx+1}`;
+                }
 
                 let locBadge = '';
                 if (m.district) {
                     locBadge =
                         `<span style="font-size:0.35rem;background:rgba(42,125,225,0.08);color:var(--accent-blue);padding:1px 6px;border-radius:6px;"><i class="fas fa-map-marker-alt"></i> ${m.district}</span>`;
+                }
+
+                let ocrBadge = '';
+                if (m.ocrDomains && m.ocrDomains.length) {
+                    ocrBadge = `<span class="domain-indicator"><i class="fas fa-brain"></i> ${m.ocrDomains.length}</span>`;
                 }
 
                 html += `
@@ -2518,7 +2478,7 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                             ${likeData.count > 0 ? `<div class="like-badge"><i class="fas fa-heart"></i> ${likeData.count}</div>` : ''}
                         </div>
                         <div class="card-body">
-                            <div class="card-name">${m.nom || 'N/A'}</div>
+                            <div class="card-name">${m.nom || 'N/A'} ${ocrBadge}</div>
                             <div class="card-role"><span class="badge-role ${roleClass}">${roleLabel}</span> ${locBadge}</div>
                             <div class="card-professions">${profHtml}</div>
                             <div class="card-location"><i class="fas fa-map-pin"></i> ${m.adresse || 'N/A'}</div>
@@ -2551,8 +2511,9 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
             const m = allMembers.find(x => x.id === id);
             if (!m) return;
             const likeData = getLikes(id);
+            const domains = m.ocrDomains && m.ocrDomains.length ? `\n🏷️ Domaines: ${m.ocrDomains.join(', ')}` : '';
             const text =
-                `👤 ${m.nom}\n📋 ${m.professions ? m.professions.join(', ') : ''}\n📍 ${m.adresse || ''}\n📱 ${m.telephone || ''}\n❤️ ${likeData.count || 0} personnes satisfaites\n\n🔍 Trouvé sur NAC-Business`;
+                `👤 ${m.nom}\n📋 ${m.professions ? m.professions.join(', ') : ''}${domains}\n📍 ${m.adresse || ''}\n📱 ${m.telephone || ''}\n❤️ ${likeData.count || 0} personnes satisfaites\n\n🔍 Trouvé sur NAC-Business`;
             if (navigator.share) navigator.share({ title: 'NAC-Business', text });
             else navigator.clipboard.writeText(text).then(() => showToast('📋 Copié !', 'success'));
         }
@@ -2568,8 +2529,16 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
             const profession = document.getElementById('filterProfession').value.trim().toLowerCase();
             const district = document.getElementById('filterDistrict').value.trim().toLowerCase();
             let results = allMembers;
-            if (profession) results = results.filter(m => m.professions && m.professions.some(p => p.toLowerCase().includes(
-                profession)));
+            if (profession) {
+                results = results.filter(m => {
+                    const text = [
+                        ...(m.professions || []),
+                        ...(m.ocrDomains || []),
+                        ...(m.ocrSkills || [])
+                    ].join(' ').toLowerCase();
+                    return text.includes(profession);
+                });
+            }
             if (district) results = results.filter(m => m.district && m.district.toLowerCase().includes(district));
             results.sort((a, b) => {
                 const da = a.dateInscription ? a.dateInscription.toDate ? a.dateInscription.toDate().getTime() : 0 : 0;
@@ -2628,7 +2597,7 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
         });
 
         // ============================================================
-        // 13. DÉTAIL
+        // 13. DÉTAIL AVEC ANALYSE CONTEXTUELLE
         // ============================================================
         window.showDetail = function(id) {
             const m = allMembers.find(x => x.id === id);
@@ -2652,9 +2621,21 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
             document.getElementById('detailChampDistrict').textContent = champDistrict || 'N/A';
 
             const grid = document.getElementById('detailInfoGrid');
-            const professionsHtml = m.professions && m.professions.length ?
-                m.professions.map(p => `<span class="profession-tag">${p}</span>`).join(' ') :
+            
+            // Afficher toutes les professions + domaines + compétences
+            const allProfessions = [
+                ...(m.professions || []),
+                ...(m.ocrDomains || []),
+                ...(m.ocrSkills || [])
+            ];
+            const uniqueProfessions = [...new Set(allProfessions)];
+            const professionsHtml = uniqueProfessions.length ?
+                uniqueProfessions.map(p => {
+                    const isOcr = (m.ocrDomains && m.ocrDomains.includes(p)) || (m.ocrSkills && m.ocrSkills.includes(p));
+                    return `<span class="profession-tag ${isOcr ? 'ocr-tag' : ''}">${p}</span>`;
+                }).join(' ') :
                 'Non renseigné';
+                
             const tiktokDisplay = m.tiktok ? (m.tiktok.startsWith('@') ? m.tiktok : '@' + m.tiktok) : 'Non renseigné';
 
             grid.innerHTML = `
@@ -2665,7 +2646,7 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                 <div class="detail-info-item"><span class="label"><i class="fas fa-calendar-alt"></i> Âge</span><span class="value">${m.age || 'N/A'} ans</span></div>
                 <div class="detail-info-item"><span class="label"><i class="fas fa-venus-mars"></i> Genre</span><span class="value">${m.genre || 'N/A'}</span></div>
                 <div class="detail-info-item"><span class="label"><i class="fas fa-graduation-cap"></i> Niveau</span><span class="value">${m.niveauEtudes || 'N/A'}</span></div>
-                <div class="detail-info-item full-width"><span class="label"><i class="fas fa-briefcase"></i> Professions</span><div class="detail-professions-list">${professionsHtml}</div></div>
+                <div class="detail-info-item full-width"><span class="label"><i class="fas fa-briefcase"></i> Professions & Domaines</span><div class="detail-professions-list">${professionsHtml}</div></div>
                 <div class="detail-info-item full-width"><span class="label"><i class="fas fa-home"></i> Adresse</span><span class="value">${m.adresse || 'N/A'}</span></div>
                 <div class="detail-info-item full-width"><span class="label"><i class="fas fa-map-marker-alt"></i> Référence</span><span class="value">${m.adresseRef || 'N/A'}</span></div>
                 <div class="detail-info-item full-width"><span class="label"><i class="fas fa-phone"></i> Téléphone</span><span class="value">${m.telephone || 'N/A'}</span></div>
@@ -2674,6 +2655,33 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
             `;
 
             updateDetailLikes(id);
+
+            // OCR SECTION avec analyse contextuelle
+            const ocrSection = document.getElementById('detailOcrSection');
+            const ocrDomains = document.getElementById('detailOcrDomains');
+            const ocrSkills = document.getElementById('detailOcrSkills');
+            const ocrResume = document.getElementById('detailOcrResume');
+            const ocrConfidence = document.getElementById('detailOcrConfidence');
+            
+            if ((m.ocrDomains && m.ocrDomains.length) || (m.ocrSkills && m.ocrSkills.length)) {
+                ocrSection.style.display = 'block';
+                ocrDomains.innerHTML = (m.ocrDomains || []).map(d => 
+                    `<span class="domain-tag"><i class="fas fa-building"></i> ${d}</span>`
+                ).join('');
+                ocrSkills.innerHTML = (m.ocrSkills || []).map(s => 
+                    `<span class="skill-tag"><i class="fas fa-tools"></i> ${s}</span>`
+                ).join('');
+                ocrResume.textContent = m.ocrResume || 'Aucun résumé disponible';
+                if (m.ocrConfidence) {
+                    const confidencePercent = Math.round(m.ocrConfidence * 100);
+                    const confidenceLabel = confidencePercent > 80 ? '🟢 Très fiable' : confidencePercent > 60 ? '🟡 Fiable' : '🟠 À vérifier';
+                    ocrConfidence.textContent = `Confiance: ${confidencePercent}% - ${confidenceLabel}`;
+                } else {
+                    ocrConfidence.textContent = '';
+                }
+            } else {
+                ocrSection.style.display = 'none';
+            }
 
             const docSection = document.getElementById('detailDocumentSection');
             if (m.document) {
@@ -2726,6 +2734,8 @@ Tu dois analyser la requête de l'utilisateur et retourner UNIQUEMENT un JSON va
                     const m = doc.data();
                     allMembers.push({ id: doc.id, ...m });
                     if (m.professions) m.professions.forEach(p => profSet.add(p));
+                    if (m.ocrDomains) m.ocrDomains.forEach(d => profSet.add(d));
+                    if (m.ocrSkills) m.ocrSkills.forEach(s => profSet.add(s));
                 });
                 allProfessions = Array.from(profSet).sort();
                 document.getElementById('professionSuggestions').innerHTML = allProfessions.map(p =>
