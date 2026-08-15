@@ -100,19 +100,33 @@
         }
         .header-badge i { color: var(--accent-gold); }
 
-        /* ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE ===== */
-        .pub-hero {
+        /* ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE ===== */
+        .pub-hero-wrapper {
             position: relative;
             width: 100%;
-            min-height: 180px;
-            max-height: 320px;
             overflow: hidden;
             background: var(--primary-dark);
-            cursor: pointer;
-            touch-action: manipulation;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .pub-hero .pub-hero-image {
+        .pub-hero-slider {
+            display: flex;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .pub-hero-slide {
+            flex: 0 0 100%;
+            min-height: 180px;
+            max-height: 320px;
+            position: relative;
+            cursor: pointer;
+            touch-action: manipulation;
+            background: var(--primary-dark);
+            overflow: hidden;
+        }
+
+        .pub-hero-slide .pub-hero-image {
             width: 100%;
             height: 100%;
             min-height: 180px;
@@ -121,16 +135,17 @@
             display: block;
         }
 
-        .pub-hero .pub-hero-overlay {
+        .pub-hero-slide .pub-hero-overlay {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 12px 16px 14px;
             background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+            pointer-events: none;
         }
 
-        .pub-hero .pub-hero-title {
+        .pub-hero-slide .pub-hero-title {
             color: #fff;
             font-weight: 700;
             font-size: 1rem;
@@ -138,7 +153,7 @@
             margin-bottom: 2px;
         }
 
-        .pub-hero .pub-hero-subtitle {
+        .pub-hero-slide .pub-hero-subtitle {
             color: rgba(255,255,255,0.85);
             font-size: 0.65rem;
             display: flex;
@@ -147,7 +162,7 @@
             flex-wrap: wrap;
         }
 
-        .pub-hero .pub-hero-subtitle .pub-tag {
+        .pub-hero-slide .pub-hero-subtitle .pub-tag {
             background: rgba(255,255,255,0.15);
             padding: 1px 10px;
             border-radius: 20px;
@@ -156,7 +171,7 @@
             color: #fff;
         }
 
-        .pub-hero .pub-hero-badge {
+        .pub-hero-slide .pub-hero-badge {
             position: absolute;
             top: 10px;
             right: 10px;
@@ -169,17 +184,18 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
             box-shadow: 0 2px 12px rgba(231,76,94,0.35);
+            pointer-events: none;
         }
 
-        .pub-hero .pub-hero-badge.promotion {
+        .pub-hero-slide .pub-hero-badge.promotion {
             background: #f39c12;
         }
 
-        .pub-hero .pub-hero-badge.member {
+        .pub-hero-slide .pub-hero-badge.member {
             background: #6a1b9a;
         }
 
-        .pub-hero .pub-hero-countdown {
+        .pub-hero-slide .pub-hero-countdown {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -194,13 +210,14 @@
             display: flex;
             align-items: center;
             gap: 6px;
+            pointer-events: none;
         }
 
-        .pub-hero .pub-hero-countdown i {
+        .pub-hero-slide .pub-hero-countdown i {
             font-size: 0.45rem;
         }
 
-        .pub-hero .pub-hero-member {
+        .pub-hero-slide .pub-hero-member {
             position: absolute;
             bottom: 55px;
             left: 16px;
@@ -212,9 +229,10 @@
             -webkit-backdrop-filter: blur(4px);
             padding: 4px 12px 4px 6px;
             border-radius: 30px;
+            pointer-events: none;
         }
 
-        .pub-hero .pub-hero-member img {
+        .pub-hero-slide .pub-hero-member img {
             width: 28px;
             height: 28px;
             border-radius: 50%;
@@ -222,13 +240,13 @@
             border: 2px solid var(--accent-gold);
         }
 
-        .pub-hero .pub-hero-member span {
+        .pub-hero-slide .pub-hero-member span {
             color: #fff;
             font-size: 0.55rem;
             font-weight: 600;
         }
 
-        .pub-hero .pub-hero-cta {
+        .pub-hero-slide .pub-hero-cta {
             position: absolute;
             bottom: 14px;
             right: 16px;
@@ -242,9 +260,11 @@
             letter-spacing: 0.3px;
             box-shadow: 0 2px 16px rgba(42,125,225,0.35);
             transition: background 0.3s ease;
+            pointer-events: auto;
+            z-index: 5;
         }
 
-        .pub-hero .pub-hero-cta:hover {
+        .pub-hero-slide .pub-hero-cta:hover {
             background: #1a6bc4;
         }
 
@@ -1168,16 +1188,16 @@
             .detail-window .detail-likes-section .like-btn-big { font-size: 0.65rem; padding: 4px 12px; min-height: 32px; }
             .detail-window .detail-likes-section .likes-info .like-icon-big { font-size: 1.2rem; }
             .detail-window .detail-likes-section .likes-info .like-stats .like-count-big { font-size: 0.9rem; }
-            .pub-hero { min-height: 140px; max-height: 240px; }
-            .pub-hero .pub-hero-image { min-height: 140px; max-height: 240px; }
-            .pub-hero .pub-hero-title { font-size: 0.85rem; }
-            .pub-hero .pub-hero-subtitle { font-size: 0.55rem; }
-            .pub-hero .pub-hero-cta { font-size: 0.5rem; padding: 4px 12px; bottom: 10px; right: 12px; }
-            .pub-hero .pub-hero-member { bottom: 45px; left: 12px; }
-            .pub-hero .pub-hero-member img { width: 22px; height: 22px; }
-            .pub-hero .pub-hero-member span { font-size: 0.45rem; }
-            .pub-hero .pub-hero-badge { font-size: 0.4rem; padding: 2px 10px; top: 8px; right: 8px; }
-            .pub-hero .pub-hero-countdown { font-size: 0.45rem; padding: 2px 10px; top: 8px; left: 8px; }
+            .pub-hero-slide { min-height: 140px; max-height: 240px; }
+            .pub-hero-slide .pub-hero-image { min-height: 140px; max-height: 240px; }
+            .pub-hero-slide .pub-hero-title { font-size: 0.85rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.55rem; }
+            .pub-hero-slide .pub-hero-cta { font-size: 0.5rem; padding: 4px 12px; bottom: 10px; right: 12px; }
+            .pub-hero-slide .pub-hero-member { bottom: 45px; left: 12px; }
+            .pub-hero-slide .pub-hero-member img { width: 22px; height: 22px; }
+            .pub-hero-slide .pub-hero-member span { font-size: 0.45rem; }
+            .pub-hero-slide .pub-hero-badge { font-size: 0.4rem; padding: 2px 10px; top: 8px; right: 8px; }
+            .pub-hero-slide .pub-hero-countdown { font-size: 0.45rem; padding: 2px 10px; top: 8px; left: 8px; }
             .pub-hero-controls { padding: 3px 10px 5px; }
             .pub-hero-controls .pub-nav-btn { font-size: 0.45rem; padding: 2px 8px; }
             .pub-hero-controls .pub-timer { font-size: 0.4rem; gap: 4px; }
@@ -1211,10 +1231,10 @@
             .header-btn { width: 30px; height: 30px; font-size: 0.75rem; }
             .header-logo { width: 24px; height: 24px; font-size: 10px; }
             .header-title { font-size: 0.7rem; }
-            .pub-hero { min-height: 110px; max-height: 190px; }
-            .pub-hero .pub-hero-image { min-height: 110px; max-height: 190px; }
-            .pub-hero .pub-hero-title { font-size: 0.7rem; }
-            .pub-hero .pub-hero-subtitle { font-size: 0.45rem; }
+            .pub-hero-slide { min-height: 110px; max-height: 190px; }
+            .pub-hero-slide .pub-hero-image { min-height: 110px; max-height: 190px; }
+            .pub-hero-slide .pub-hero-title { font-size: 0.7rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.45rem; }
             .pub-hero-controls .pub-nav-btn { font-size: 0.4rem; padding: 2px 6px; }
             .pub-hero-controls .pub-timer .progress-bar-indicator { width: 20px; }
         }
@@ -1227,10 +1247,10 @@
             .detail-overlay { align-items: center; }
             .detail-window .detail-header { border-radius: 20px 20px 0 0; height: 240px; }
             .detail-window .detail-close-btn { top: 16px; right: 16px; }
-            .pub-hero { min-height: 260px; max-height: 400px; }
-            .pub-hero .pub-hero-image { min-height: 260px; max-height: 400px; }
-            .pub-hero .pub-hero-title { font-size: 1.3rem; }
-            .pub-hero .pub-hero-subtitle { font-size: 0.75rem; }
+            .pub-hero-slide { min-height: 260px; max-height: 400px; }
+            .pub-hero-slide .pub-hero-image { min-height: 260px; max-height: 400px; }
+            .pub-hero-slide .pub-hero-title { font-size: 1.3rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.75rem; }
             .support-btn { width: 64px; height: 64px; font-size: 1.6rem; }
         }
 
@@ -1430,8 +1450,10 @@
         </div>
     </header>
 
-    <!-- ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE ===== -->
-    <div id="pubHeroContainer"></div>
+    <!-- ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE ===== -->
+    <div id="pubHeroContainer" class="pub-hero-wrapper">
+        <!-- Rempli dynamiquement -->
+    </div>
 
     <!-- ===== RECHERCHE AI ===== -->
     <div class="ai-search-section">
@@ -1833,7 +1855,7 @@
         }
 
         // ================================================================
-        // CAROUSSEL PUBLICITAIRE PLEINE PAGE - DURÉE 15 SECONDES
+        // CAROUSSEL PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE
         // ================================================================
         let publicitesActives = [];
         let currentPubIndex = 0;
@@ -1843,7 +1865,7 @@
         let isPubPaused = false;
         let touchStartX = 0;
         let touchEndX = 0;
-        const PUB_DURATION = 15; // 15 secondes
+        const PUB_DURATION = 15;
 
         async function loadPublicites() {
             try {
@@ -1872,7 +1894,7 @@
                     }
                 });
 
-                // Mélanger aléatoirement
+                // Mélanger et trier
                 publicitesActives = shuffleArray(publicitesActives);
                 publicitesActives.sort((a, b) => {
                     if (a.membreId && !b.membreId) return -1;
@@ -1903,104 +1925,44 @@
                 return;
             }
 
-            const pub = publicitesActives[currentPubIndex];
-            const total = publicitesActives.length;
+            // Créer le slider avec toutes les pubs
+            let slidesHtml = '';
+            publicitesActives.forEach((pub, index) => {
+                slidesHtml += createSlideHtml(pub, index);
+            });
 
             let html = `
-                <div class="pub-hero" id="pubHeroSlide">
-                    <img src="${pub.image}" class="pub-hero-image" alt="${pub.titre}" loading="lazy" />
-                    <div class="pub-hero-overlay">
-                        <div class="pub-hero-title">${pub.titre}</div>
-                        <div class="pub-hero-subtitle">
-                            ${pub.membreInfo ? pub.membreInfo.nom || '' : ''}
-                            ${pub.membreInfo && pub.membreInfo.professions && pub.membreInfo.professions.length ? '· ' + pub.membreInfo.professions.slice(0,2).join(', ') : ''}
-                            ${!pub.membreInfo ? 'Annonce spéciale' : ''}
-                            <span class="pub-tag"><i class="fas fa-star"></i> À la une</span>
-                        </div>
-                    </div>
+                <div class="pub-hero-slider" id="pubHeroSlider" style="transform: translateX(0%);">
+                    ${slidesHtml}
+                </div>
+                <div class="pub-hero-controls">
+                    <button class="pub-nav-btn" onclick="prevPub()"><i class="fas fa-chevron-left"></i> Précédent</button>
+                    <div class="pub-dots">
             `;
-
-            // Badge
-            let badgeClass = '';
-            let badgeText = '';
-            if (pub.membreId) {
-                badgeClass = 'member';
-                badgeText = '👤 Membre';
-            } else if (pub.titre.toLowerCase().includes('promo') || pub.titre.toLowerCase().includes('offre')) {
-                badgeClass = 'promotion';
-                badgeText = '🏷️ Promotion';
-            } else {
-                badgeText = '📢 Annonce';
-            }
-            html += `<span class="pub-hero-badge ${badgeClass}">${badgeText}</span>`;
-
-            // Countdown
-            const dateFin = new Date(pub.dateFin);
-            const now = new Date();
-            const diff = dateFin - now;
-            let countdown = '';
-            if (diff > 0) {
-                const jours = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const heures = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                if (jours > 0) countdown = `${jours}j ${heures}h`;
-                else if (heures > 0) countdown = `${heures}h`;
-                else countdown = 'Fin aujourd\'hui';
-            }
-            if (countdown) {
-                html += `<div class="pub-hero-countdown"><i class="fas fa-clock"></i> ${countdown}</div>`;
-            }
-
-            // Member tag
-            if (pub.membreInfo) {
-                html += `
-                    <div class="pub-hero-member">
-                        <img src="${pub.membreInfo.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile'}" alt="${pub.membreInfo.nom}">
-                        <span>${pub.membreInfo.nom}</span>
-                    </div>
-                `;
-            }
-
-            // CTA
-            const link = pub.lien || '#';
-            const onclick = pub.lien ? `window.open('${pub.lien}', '_blank')` :
-                (pub.membreId ? `showDetail('${pub.membreId}')` : '');
+            publicitesActives.forEach((_, i) => {
+                html += `<span class="dot ${i === currentPubIndex ? 'active' : ''}" onclick="goToPub(${i})"></span>`;
+            });
             html += `
-                    <span class="pub-hero-cta" onclick="event.stopPropagation(); ${onclick}">Voir plus <i class="fas fa-arrow-right"></i></span>
+                    </div>
+                    <div class="pub-timer">
+                        <span class="progress-bar-indicator"><span class="progress-fill" id="pubProgressFill"></span></span>
+                        <span id="pubTimerText">${PUB_DURATION}s</span>
+                    </div>
+                    <button class="pub-nav-btn" onclick="nextPub()">Suivant <i class="fas fa-chevron-right"></i></button>
                 </div>
             `;
 
-            // Controls
-            if (total > 1) {
-                html += `
-                    <div class="pub-hero-controls">
-                        <button class="pub-nav-btn" onclick="prevPub()"><i class="fas fa-chevron-left"></i> Précédent</button>
-                        <div class="pub-dots">
-                `;
-                publicitesActives.forEach((_, i) => {
-                    html += `<span class="dot ${i === currentPubIndex ? 'active' : ''}" onclick="goToPub(${i})"></span>`;
-                });
-                html += `
-                        </div>
-                        <div class="pub-timer">
-                            <span class="progress-bar-indicator"><span class="progress-fill" id="pubProgressFill"></span></span>
-                            <span id="pubTimerText">${PUB_DURATION}s</span>
-                        </div>
-                        <button class="pub-nav-btn" onclick="nextPub()">Suivant <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                `;
-            }
-
             container.innerHTML = html;
 
-            // Gestion du swipe
-            const slide = document.getElementById('pubHeroSlide');
-            if (slide) {
-                slide.addEventListener('touchstart', function(e) {
+            // Gestion du swipe sur le slider
+            const slider = document.getElementById('pubHeroSlider');
+            if (slider) {
+                slider.addEventListener('touchstart', function(e) {
                     touchStartX = e.changedTouches[0].screenX;
                     isPubPaused = true;
                 }, { passive: true });
 
-                slide.addEventListener('touchend', function(e) {
+                slider.addEventListener('touchend', function(e) {
                     touchEndX = e.changedTouches[0].screenX;
                     const diff = touchStartX - touchEndX;
                     if (Math.abs(diff) > 30) {
@@ -2018,27 +1980,9 @@
             startPubTimer();
         }
 
-        function updatePubSlide() {
-            const container = document.getElementById('pubHeroContainer');
-            if (!container || !publicitesActives.length) return;
-
-            const pub = publicitesActives[currentPubIndex];
-            const total = publicitesActives.length;
-
-            let html = `
-                <div class="pub-hero" id="pubHeroSlide">
-                    <img src="${pub.image}" class="pub-hero-image" alt="${pub.titre}" loading="lazy" />
-                    <div class="pub-hero-overlay">
-                        <div class="pub-hero-title">${pub.titre}</div>
-                        <div class="pub-hero-subtitle">
-                            ${pub.membreInfo ? pub.membreInfo.nom || '' : ''}
-                            ${pub.membreInfo && pub.membreInfo.professions && pub.membreInfo.professions.length ? '· ' + pub.membreInfo.professions.slice(0,2).join(', ') : ''}
-                            ${!pub.membreInfo ? 'Annonce spéciale' : ''}
-                            <span class="pub-tag"><i class="fas fa-star"></i> À la une</span>
-                        </div>
-                    </div>
-            `;
-
+        function createSlideHtml(pub, index) {
+            const isActive = index === currentPubIndex;
+            
             let badgeClass = '';
             let badgeText = '';
             if (pub.membreId) {
@@ -2050,8 +1994,8 @@
             } else {
                 badgeText = '📢 Annonce';
             }
-            html += `<span class="pub-hero-badge ${badgeClass}">${badgeText}</span>`;
 
+            // Countdown
             const dateFin = new Date(pub.dateFin);
             const now = new Date();
             const diff = dateFin - now;
@@ -2063,75 +2007,54 @@
                 else if (heures > 0) countdown = `${heures}h`;
                 else countdown = 'Fin aujourd\'hui';
             }
-            if (countdown) {
-                html += `<div class="pub-hero-countdown"><i class="fas fa-clock"></i> ${countdown}</div>`;
-            }
-
-            if (pub.membreInfo) {
-                html += `
-                    <div class="pub-hero-member">
-                        <img src="${pub.membreInfo.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile'}" alt="${pub.membreInfo.nom}">
-                        <span>${pub.membreInfo.nom}</span>
-                    </div>
-                `;
-            }
 
             const link = pub.lien || '#';
             const onclick = pub.lien ? `window.open('${pub.lien}', '_blank')` :
                 (pub.membreId ? `showDetail('${pub.membreId}')` : '');
-            html += `
+
+            return `
+                <div class="pub-hero-slide" data-index="${index}">
+                    <img src="${pub.image}" class="pub-hero-image" alt="${pub.titre}" loading="lazy" />
+                    <div class="pub-hero-overlay">
+                        <div class="pub-hero-title">${pub.titre}</div>
+                        <div class="pub-hero-subtitle">
+                            ${pub.membreInfo ? pub.membreInfo.nom || '' : ''}
+                            ${pub.membreInfo && pub.membreInfo.professions && pub.membreInfo.professions.length ? '· ' + pub.membreInfo.professions.slice(0,2).join(', ') : ''}
+                            ${!pub.membreInfo ? 'Annonce spéciale' : ''}
+                            <span class="pub-tag"><i class="fas fa-star"></i> À la une</span>
+                        </div>
+                    </div>
+                    <span class="pub-hero-badge ${badgeClass}">${badgeText}</span>
+                    ${countdown ? `<div class="pub-hero-countdown"><i class="fas fa-clock"></i> ${countdown}</div>` : ''}
+                    ${pub.membreInfo ? `
+                        <div class="pub-hero-member">
+                            <img src="${pub.membreInfo.photo || 'https://res.cloudinary.com/diwn8sxtn/image/upload/v1/default_profile'}" alt="${pub.membreInfo.nom}">
+                            <span>${pub.membreInfo.nom}</span>
+                        </div>
+                    ` : ''}
                     <span class="pub-hero-cta" onclick="event.stopPropagation(); ${onclick}">Voir plus <i class="fas fa-arrow-right"></i></span>
                 </div>
             `;
+        }
 
-            if (total > 1) {
-                html += `
-                    <div class="pub-hero-controls">
-                        <button class="pub-nav-btn" onclick="prevPub()"><i class="fas fa-chevron-left"></i> Précédent</button>
-                        <div class="pub-dots">
-                `;
-                publicitesActives.forEach((_, i) => {
-                    html += `<span class="dot ${i === currentPubIndex ? 'active' : ''}" onclick="goToPub(${i})"></span>`;
-                });
-                html += `
-                        </div>
-                        <div class="pub-timer">
-                            <span class="progress-bar-indicator"><span class="progress-fill" id="pubProgressFill"></span></span>
-                            <span id="pubTimerText">${PUB_DURATION}s</span>
-                        </div>
-                        <button class="pub-nav-btn" onclick="nextPub()">Suivant <i class="fas fa-chevron-right"></i></button>
-                    </div>
-                `;
-            }
+        function updatePubSlide() {
+            const slider = document.getElementById('pubHeroSlider');
+            if (!slider) return;
 
-            container.innerHTML = html;
+            // Mettre à jour la transformation
+            const translateX = -currentPubIndex * 100;
+            slider.style.transform = `translateX(${translateX}%)`;
+
+            // Mettre à jour les points
+            const dots = document.querySelectorAll('.pub-dots .dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPubIndex);
+            });
 
             // Réinitialiser le timer
             pubTimer = 0;
             pubProgress = 0;
             updateProgressBar();
-
-            // Réattacher les events de swipe
-            const slide = document.getElementById('pubHeroSlide');
-            if (slide) {
-                slide.addEventListener('touchstart', function(e) {
-                    touchStartX = e.changedTouches[0].screenX;
-                    isPubPaused = true;
-                }, { passive: true });
-
-                slide.addEventListener('touchend', function(e) {
-                    touchEndX = e.changedTouches[0].screenX;
-                    const diff = touchStartX - touchEndX;
-                    if (Math.abs(diff) > 30) {
-                        if (diff > 0) {
-                            nextPub();
-                        } else {
-                            prevPub();
-                        }
-                    }
-                    setTimeout(() => { isPubPaused = false; }, 3000);
-                }, { passive: true });
-            }
         }
 
         function updateProgressBar() {
@@ -2168,27 +2091,18 @@
             if (publicitesActives.length <= 1) return;
             currentPubIndex = (currentPubIndex + 1) % publicitesActives.length;
             updatePubSlide();
-            pubTimer = 0;
-            pubProgress = 0;
-            updateProgressBar();
         }
 
         function prevPub() {
             if (publicitesActives.length <= 1) return;
             currentPubIndex = (currentPubIndex - 1 + publicitesActives.length) % publicitesActives.length;
             updatePubSlide();
-            pubTimer = 0;
-            pubProgress = 0;
-            updateProgressBar();
         }
 
         function goToPub(index) {
             if (index === currentPubIndex || index < 0 || index >= publicitesActives.length) return;
             currentPubIndex = index;
             updatePubSlide();
-            pubTimer = 0;
-            pubProgress = 0;
-            updateProgressBar();
         }
 
         // ================================================================
@@ -2216,13 +2130,10 @@
             }
         }
 
-        // Fermer la modale support avec Echap
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const modal = document.getElementById('supportModal');
-                if (modal.classList.contains('active')) {
-                    toggleSupportModal();
-                }
+                if (modal.classList.contains('active')) toggleSupportModal();
                 closePhotoModal();
                 closeDetail();
                 closeFavorites();
