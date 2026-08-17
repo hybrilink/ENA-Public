@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>NAC-Business Pro</title>
 
     <link rel="manifest" href="manifest.json" />
@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
     <style>
+        /* ===== VARIABLES & RESET ===== */
         :root {
             --primary-dark: #0a1a2f;
             --primary-mid: #122b4a;
@@ -45,6 +46,7 @@
             padding-top: var(--safe-top);
             overflow-x: hidden;
             -webkit-font-smoothing: antialiased;
+            touch-action: pan-y;
         }
 
         /* ===== HEADER ===== */
@@ -100,39 +102,122 @@
         }
         .header-badge i { color: var(--accent-gold); }
 
-        /* ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE ===== */
+        /* ===== BANNIÈRE PUBLICITAIRE "GONFLÉE" ===== */
         .pub-hero-wrapper {
             position: relative;
             width: 100%;
-            overflow: hidden;
-            background: var(--primary-dark);
-            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: visible;
+            background: transparent;
+            padding: 12px 8px 8px 8px;
+            z-index: 2;
+            perspective: 1200px;
+            perspective-origin: center top;
+            touch-action: pan-y;
         }
 
         .pub-hero-slider {
             display: flex;
             transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             will-change: transform;
+            transform-style: preserve-3d;
+            gap: 0;
+            touch-action: pan-y;
         }
 
         .pub-hero-slide {
             flex: 0 0 100%;
-            min-height: 180px;
-            max-height: 320px;
+            min-height: 240px;
+            max-height: 420px;
             position: relative;
             cursor: pointer;
-            touch-action: manipulation;
-            background: var(--primary-dark);
+            touch-action: pan-y;
+            background: linear-gradient(145deg, #1a1a2e, #0f0f1f);
             overflow: hidden;
+            border-radius: 20px;
+            transform: translateZ(40px) scale(1.02) rotateX(2deg);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.5s ease;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.04) inset,
+                0 0 40px rgba(201, 168, 76, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transform-style: preserve-3d;
+            touch-action: pan-y;
+        }
+
+        .pub-hero-slide:active {
+            transform: translateZ(30px) scale(0.98) rotateX(1deg);
+        }
+
+        .pub-hero-slide.active-slide {
+            animation: popIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        }
+
+        @keyframes popIn {
+            0% { transform: translateZ(-80px) scale(0.9) rotateX(5deg); opacity: 0.5; }
+            100% { transform: translateZ(40px) scale(1.02) rotateX(2deg); opacity: 1; }
+        }
+
+        .pub-hero-slide .pub-media-container {
+            width: 100%;
+            height: 100%;
+            min-height: 240px;
+            max-height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #0a0a12;
+            overflow: hidden;
+            position: relative;
+            border-radius: 20px;
+            transform: translateZ(10px);
+            touch-action: pan-y;
         }
 
         .pub-hero-slide .pub-hero-image {
             width: 100%;
             height: 100%;
-            min-height: 180px;
-            max-height: 320px;
-            object-fit: cover;
+            min-height: 240px;
+            max-height: 420px;
+            object-fit: contain;
             display: block;
+            background: #0a0a12;
+            transition: transform 0.8s ease;
+            filter: brightness(1.02) saturate(1.05);
+            transform: translateZ(5px);
+            touch-action: pan-y;
+            pointer-events: none;
+        }
+
+        .pub-hero-slide .pub-hero-video {
+            width: 100%;
+            height: 100%;
+            min-height: 240px;
+            max-height: 420px;
+            object-fit: contain;
+            background: #0a0a12;
+            display: block;
+            transform: translateZ(5px);
+            touch-action: pan-y;
+            pointer-events: auto;
+            /* Permet les contrôles vidéo */
+        }
+
+        /* Style personnalisé pour les contrôles vidéo */
+        .pub-hero-slide .pub-hero-video::-webkit-media-controls-panel {
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(8px);
+            border-radius: 12px;
+            padding: 8px 12px;
+        }
+
+        .pub-hero-slide .pub-hero-video::-webkit-media-controls-play-button {
+            color: #fff;
+        }
+
+        .pub-hero-slide .pub-hero-video::-webkit-media-controls-volume-slider {
+            background: rgba(255,255,255,0.2);
+            border-radius: 4px;
         }
 
         .pub-hero-slide .pub-hero-overlay {
@@ -140,162 +225,204 @@
             bottom: 0;
             left: 0;
             right: 0;
-            padding: 12px 16px 14px;
-            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+            padding: 20px 24px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,0.92) 0%, rgba(0,0,0,0.5) 60%, transparent 100%);
             pointer-events: none;
+            border-radius: 0 0 20px 20px;
+            transform: translateZ(15px);
+            text-shadow: 0 2px 20px rgba(0,0,0,0.5);
         }
 
         .pub-hero-slide .pub-hero-title {
             color: #fff;
-            font-weight: 700;
-            font-size: 1rem;
-            text-shadow: 0 2px 12px rgba(0,0,0,0.3);
-            margin-bottom: 2px;
+            font-weight: 800;
+            font-size: 1.3rem;
+            text-shadow: 0 4px 30px rgba(0,0,0,0.6);
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+            transform: translateZ(10px);
         }
 
         .pub-hero-slide .pub-hero-subtitle {
-            color: rgba(255,255,255,0.85);
-            font-size: 0.65rem;
+            color: rgba(255,255,255,0.9);
+            font-size: 0.7rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             flex-wrap: wrap;
+            text-shadow: 0 2px 15px rgba(0,0,0,0.4);
+            transform: translateZ(8px);
         }
 
         .pub-hero-slide .pub-hero-subtitle .pub-tag {
-            background: rgba(255,255,255,0.15);
-            padding: 1px 10px;
-            border-radius: 20px;
-            font-size: 0.5rem;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            padding: 3px 16px;
+            border-radius: 30px;
+            font-size: 0.55rem;
             font-weight: 600;
             color: #fff;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+            transform: translateZ(5px);
         }
 
         .pub-hero-slide .pub-hero-badge {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #e74c5e;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(145deg, #e74c5e, #c0392b);
             color: #fff;
-            font-size: 0.5rem;
-            font-weight: 700;
-            padding: 3px 12px;
-            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 800;
+            padding: 5px 18px;
+            border-radius: 30px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-            box-shadow: 0 2px 12px rgba(231,76,94,0.35);
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 30px rgba(231,76,94,0.5);
             pointer-events: none;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            transform: translateZ(30px) rotate(2deg);
+            box-shadow: 
+                0 8px 30px rgba(231,76,94,0.4),
+                0 0 0 1px rgba(255,255,255,0.1) inset;
         }
 
         .pub-hero-slide .pub-hero-badge.promotion {
-            background: #f39c12;
+            background: linear-gradient(145deg, #f39c12, #e67e22);
+            box-shadow: 0 8px 30px rgba(243,156,18,0.4);
         }
 
         .pub-hero-slide .pub-hero-badge.member {
-            background: #6a1b9a;
+            background: linear-gradient(145deg, #6a1b9a, #4a148c);
+            box-shadow: 0 8px 30px rgba(106,27,154,0.4);
         }
 
         .pub-hero-slide .pub-hero-countdown {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
+            top: 16px;
+            left: 16px;
+            background: rgba(0,0,0,0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             color: #2ecc71;
-            font-size: 0.55rem;
-            font-weight: 600;
-            padding: 3px 12px;
-            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 5px 18px;
+            border-radius: 30px;
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
             pointer-events: none;
+            border: 1px solid rgba(46,204,113,0.15);
+            transform: translateZ(25px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
         }
 
         .pub-hero-slide .pub-hero-countdown i {
-            font-size: 0.45rem;
+            font-size: 0.5rem;
         }
 
         .pub-hero-slide .pub-hero-member {
             position: absolute;
-            bottom: 55px;
-            left: 16px;
+            bottom: 76px;
+            left: 20px;
             display: flex;
             align-items: center;
-            gap: 8px;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            padding: 4px 12px 4px 6px;
-            border-radius: 30px;
+            gap: 10px;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 6px 18px 6px 8px;
+            border-radius: 40px;
             pointer-events: none;
+            border: 1px solid rgba(255,255,255,0.06);
+            transform: translateZ(20px);
+            box-shadow: 0 4px 24px rgba(0,0,0,0.3);
         }
 
         .pub-hero-slide .pub-hero-member img {
-            width: 28px;
-            height: 28px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             object-fit: cover;
             border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 20px rgba(201,168,76,0.2);
         }
 
         .pub-hero-slide .pub-hero-member span {
             color: #fff;
-            font-size: 0.55rem;
+            font-size: 0.6rem;
             font-weight: 600;
+            text-shadow: 0 1px 10px rgba(0,0,0,0.3);
         }
 
         .pub-hero-slide .pub-hero-cta {
             position: absolute;
-            bottom: 14px;
-            right: 16px;
-            background: var(--accent-blue);
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(145deg, #2a7de1, #1a5fc4);
             color: #fff;
-            font-size: 0.6rem;
+            font-size: 0.7rem;
             font-weight: 700;
-            padding: 5px 16px;
-            border-radius: 30px;
+            padding: 10px 26px;
+            border-radius: 40px;
             text-transform: uppercase;
-            letter-spacing: 0.3px;
-            box-shadow: 0 2px 16px rgba(42,125,225,0.35);
-            transition: background 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 8px 32px rgba(42,125,225,0.5);
+            transition: all 0.3s ease;
             pointer-events: auto;
             z-index: 5;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            transform: translateZ(25px) rotate(1deg);
+            box-shadow: 
+                0 8px 32px rgba(42,125,225,0.4),
+                0 0 0 1px rgba(255,255,255,0.08) inset;
         }
 
-        .pub-hero-slide .pub-hero-cta:hover {
-            background: #1a6bc4;
+        .pub-hero-slide .pub-hero-cta:active {
+            transform: translateZ(15px) scale(0.95);
         }
 
-        /* Contrôles du carrousel publicitaire */
         .pub-hero-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 4px 12px 6px;
-            background: var(--primary-dark);
-            border-top: 1px solid rgba(255,255,255,0.05);
+            padding: 10px 16px 12px;
+            background: rgba(10, 10, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            border-radius: 0 0 20px 20px;
+            margin: 0 8px;
+            transform: translateZ(10px);
+            box-shadow: 0 4px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.03);
+            border-top: none;
+            touch-action: pan-y;
         }
 
         .pub-hero-controls .pub-nav-btn {
             background: rgba(255,255,255,0.06);
             border: none;
-            color: rgba(255,255,255,0.6);
-            font-size: 0.55rem;
-            padding: 4px 12px;
-            border-radius: 20px;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.6rem;
+            padding: 6px 18px;
+            border-radius: 30px;
             cursor: pointer;
             transition: all 0.3s ease;
             touch-action: manipulation;
             display: flex;
             align-items: center;
-            gap: 4px;
-        }
-
-        .pub-hero-controls .pub-nav-btn:hover {
-            background: rgba(255,255,255,0.12);
-            color: #fff;
+            gap: 6px;
+            border: 1px solid rgba(255,255,255,0.04);
+            transform: translateZ(5px);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .pub-hero-controls .pub-nav-btn:active {
@@ -304,52 +431,155 @@
 
         .pub-hero-controls .pub-timer {
             color: rgba(255,255,255,0.5);
-            font-size: 0.5rem;
+            font-size: 0.55rem;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            transform: translateZ(5px);
         }
 
         .pub-hero-controls .pub-timer .progress-bar-indicator {
-            width: 50px;
-            height: 3px;
-            background: rgba(255,255,255,0.15);
-            border-radius: 2px;
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
             overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
 
         .pub-hero-controls .pub-timer .progress-bar-indicator .progress-fill {
             height: 100%;
-            background: var(--accent-gold);
-            border-radius: 2px;
+            background: linear-gradient(90deg, var(--accent-gold), #f5d97e);
+            border-radius: 4px;
             transition: width 1s linear;
             width: 0%;
+            box-shadow: 0 0 20px rgba(201,168,76,0.3);
         }
 
         .pub-hero-controls .pub-dots {
             display: flex;
-            gap: 6px;
+            gap: 8px;
             align-items: center;
+            transform: translateZ(5px);
         }
 
         .pub-hero-controls .pub-dots .dot {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.12);
             transition: all 0.3s ease;
             cursor: pointer;
             touch-action: manipulation;
+            border: 1px solid rgba(255,255,255,0.03);
+            -webkit-tap-highlight-color: transparent;
         }
 
         .pub-hero-controls .pub-dots .dot.active {
             background: var(--accent-gold);
-            width: 18px;
-            border-radius: 3px;
+            width: 32px;
+            border-radius: 4px;
+            box-shadow: 0 0 30px rgba(201,168,76,0.3);
         }
 
         .pub-hero-controls .pub-dots .dot:active {
-            transform: scale(0.8);
+            transform: scale(0.7);
+        }
+
+        /* ===== MODALE PLEIN ÉCRAN POUR PUBLICITÉ ===== */
+        .pub-fullscreen-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            animation: fadeIn 0.3s ease;
+            touch-action: pan-y;
+        }
+
+        .pub-fullscreen-modal.active {
+            display: flex;
+        }
+
+        .pub-fullscreen-modal .fullscreen-content {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6);
+            animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            position: relative;
+            background: #0a0a12;
+        }
+
+        .pub-fullscreen-modal .fullscreen-content img,
+        .pub-fullscreen-modal .fullscreen-content video {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            display: block;
+        }
+
+        .pub-fullscreen-modal .fullscreen-content video {
+            background: #0a0a12;
+        }
+
+        .pub-fullscreen-modal .fullscreen-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: rgba(255,255,255,0.1);
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            touch-action: manipulation;
+        }
+
+        .pub-fullscreen-modal .fullscreen-close:active {
+            transform: scale(0.9);
+        }
+
+        .pub-fullscreen-modal .fullscreen-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px 24px 24px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            color: #fff;
+            pointer-events: none;
+        }
+
+        .pub-fullscreen-modal .fullscreen-info h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .pub-fullscreen-modal .fullscreen-info p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            margin: 0;
         }
 
         /* ===== RECHERCHE ===== */
@@ -361,6 +591,7 @@
             z-index: 1040;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
             border-bottom: 1px solid var(--border-light);
+            touch-action: pan-y;
         }
         .search-container { display: flex; gap: 6px; align-items: center; }
         .search-input-wrapper { flex: 1; position: relative; min-width: 0; }
@@ -371,6 +602,7 @@
             transition: var(--transition); outline: none;
             -webkit-appearance: none; appearance: none;
             min-height: 44px;
+            touch-action: pan-y;
         }
         .search-input-wrapper input:focus {
             border-color: var(--accent-blue); background: #fff;
@@ -380,6 +612,7 @@
             position: absolute; left: 12px; top: 50%;
             transform: translateY(-50%);
             color: var(--text-muted); font-size: 0.8rem;
+            pointer-events: none;
         }
         .search-input-wrapper .ai-badge {
             position: absolute; right: 6px; top: 50%;
@@ -389,6 +622,7 @@
             padding: 2px 6px; border-radius: 30px;
             display: flex; align-items: center; gap: 3px;
             letter-spacing: 0.2px;
+            pointer-events: none;
         }
         .search-input-wrapper .ai-badge i { font-size: 0.4rem; }
         .btn-ai-search {
@@ -448,6 +682,7 @@
             top: 116px;
             z-index: 1030;
             border-bottom: 1px solid var(--border-light);
+            touch-action: pan-y;
         }
         .filter-row { display: flex; gap: 6px; align-items: flex-end; flex-wrap: nowrap; }
         .filter-row .form-control {
@@ -1153,6 +1388,31 @@
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 640px) {
+            .pub-hero-slide { min-height: 170px; max-height: 280px; }
+            .pub-hero-slide .pub-media-container { min-height: 170px; max-height: 280px; }
+            .pub-hero-slide .pub-hero-image { min-height: 170px; max-height: 280px; }
+            .pub-hero-slide .pub-hero-video { min-height: 170px; max-height: 280px; }
+            .pub-hero-slide .pub-hero-title { font-size: 1rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.6rem; }
+            .pub-hero-slide .pub-hero-cta { font-size: 0.55rem; padding: 7px 16px; bottom: 14px; right: 14px; }
+            .pub-hero-slide .pub-hero-member { bottom: 55px; left: 14px; }
+            .pub-hero-slide .pub-hero-member img { width: 26px; height: 26px; }
+            .pub-hero-slide .pub-hero-member span { font-size: 0.5rem; }
+            .pub-hero-slide .pub-hero-badge { font-size: 0.5rem; padding: 4px 12px; top: 10px; right: 10px; }
+            .pub-hero-slide .pub-hero-countdown { font-size: 0.5rem; padding: 4px 12px; top: 10px; left: 10px; }
+            .pub-hero-controls { padding: 8px 12px 10px; margin: 0 4px; }
+            .pub-hero-controls .pub-nav-btn { font-size: 0.5rem; padding: 4px 12px; }
+            .pub-hero-controls .pub-timer { font-size: 0.45rem; gap: 6px; }
+            .pub-hero-controls .pub-timer .progress-bar-indicator { width: 50px; }
+            .pub-hero-controls .pub-dots .dot { width: 6px; height: 6px; }
+            .pub-hero-controls .pub-dots .dot.active { width: 24px; }
+
+            .pub-fullscreen-modal .fullscreen-content { max-width: 95vw; max-height: 80vh; }
+            .pub-fullscreen-modal .fullscreen-content img,
+            .pub-fullscreen-modal .fullscreen-content video { max-width: 95vw; max-height: 70vh; }
+            .pub-fullscreen-modal .fullscreen-info h3 { font-size: 1rem; }
+            .pub-fullscreen-modal .fullscreen-info p { font-size: 0.7rem; }
+
             .members-grid { grid-template-columns: repeat(auto-fill, minmax(145px, 1fr)); gap: 8px; }
             .member-card .card-avatar { height: 115px; }
             .member-card .card-body { padding: 6px 6px 3px; }
@@ -1188,26 +1448,21 @@
             .detail-window .detail-likes-section .like-btn-big { font-size: 0.65rem; padding: 4px 12px; min-height: 32px; }
             .detail-window .detail-likes-section .likes-info .like-icon-big { font-size: 1.2rem; }
             .detail-window .detail-likes-section .likes-info .like-stats .like-count-big { font-size: 0.9rem; }
-            .pub-hero-slide { min-height: 140px; max-height: 240px; }
-            .pub-hero-slide .pub-hero-image { min-height: 140px; max-height: 240px; }
-            .pub-hero-slide .pub-hero-title { font-size: 0.85rem; }
-            .pub-hero-slide .pub-hero-subtitle { font-size: 0.55rem; }
-            .pub-hero-slide .pub-hero-cta { font-size: 0.5rem; padding: 4px 12px; bottom: 10px; right: 12px; }
-            .pub-hero-slide .pub-hero-member { bottom: 45px; left: 12px; }
-            .pub-hero-slide .pub-hero-member img { width: 22px; height: 22px; }
-            .pub-hero-slide .pub-hero-member span { font-size: 0.45rem; }
-            .pub-hero-slide .pub-hero-badge { font-size: 0.4rem; padding: 2px 10px; top: 8px; right: 8px; }
-            .pub-hero-slide .pub-hero-countdown { font-size: 0.45rem; padding: 2px 10px; top: 8px; left: 8px; }
-            .pub-hero-controls { padding: 3px 10px 5px; }
-            .pub-hero-controls .pub-nav-btn { font-size: 0.45rem; padding: 2px 8px; }
-            .pub-hero-controls .pub-timer { font-size: 0.4rem; gap: 4px; }
-            .pub-hero-controls .pub-timer .progress-bar-indicator { width: 30px; }
             .support-btn { width: 48px; height: 48px; font-size: 1.2rem; bottom: 80px; right: 12px; }
             .support-modal .support-window { padding: 16px; }
             .support-modal .support-window .support-item { padding: 8px 12px; }
         }
 
         @media (max-width: 400px) {
+            .pub-hero-slide { min-height: 130px; max-height: 200px; }
+            .pub-hero-slide .pub-media-container { min-height: 130px; max-height: 200px; }
+            .pub-hero-slide .pub-hero-image { min-height: 130px; max-height: 200px; }
+            .pub-hero-slide .pub-hero-video { min-height: 130px; max-height: 200px; }
+            .pub-hero-slide .pub-hero-title { font-size: 0.8rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.5rem; }
+            .pub-hero-controls .pub-nav-btn { font-size: 0.4rem; padding: 3px 8px; }
+            .pub-hero-controls .pub-timer .progress-bar-indicator { width: 35px; }
+
             .members-grid { grid-template-columns: 1fr 1fr; gap: 5px; }
             .member-card .card-avatar { height: 95px; }
             .member-card .card-professions .profession-tag { font-size: 0.3rem; padding: 1px 3px; }
@@ -1231,15 +1486,22 @@
             .header-btn { width: 30px; height: 30px; font-size: 0.75rem; }
             .header-logo { width: 24px; height: 24px; font-size: 10px; }
             .header-title { font-size: 0.7rem; }
-            .pub-hero-slide { min-height: 110px; max-height: 190px; }
-            .pub-hero-slide .pub-hero-image { min-height: 110px; max-height: 190px; }
-            .pub-hero-slide .pub-hero-title { font-size: 0.7rem; }
-            .pub-hero-slide .pub-hero-subtitle { font-size: 0.45rem; }
-            .pub-hero-controls .pub-nav-btn { font-size: 0.4rem; padding: 2px 6px; }
-            .pub-hero-controls .pub-timer .progress-bar-indicator { width: 20px; }
         }
 
         @media (min-width: 768px) {
+            .pub-hero-slide { min-height: 320px; max-height: 520px; }
+            .pub-hero-slide .pub-media-container { min-height: 320px; max-height: 520px; }
+            .pub-hero-slide .pub-hero-image { min-height: 320px; max-height: 520px; }
+            .pub-hero-slide .pub-hero-video { min-height: 320px; max-height: 520px; }
+            .pub-hero-slide .pub-hero-title { font-size: 1.8rem; }
+            .pub-hero-slide .pub-hero-subtitle { font-size: 0.9rem; }
+            .pub-hero-slide .pub-hero-cta { font-size: 0.85rem; padding: 12px 32px; }
+            .pub-hero-wrapper { padding: 16px 12px 12px 12px; }
+
+            .pub-fullscreen-modal .fullscreen-content { max-width: 80vw; max-height: 85vh; }
+            .pub-fullscreen-modal .fullscreen-content img,
+            .pub-fullscreen-modal .fullscreen-content video { max-width: 80vw; max-height: 80vh; }
+
             .members-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
             .member-card .card-avatar { height: 180px; }
             .main-content { padding: 16px 24px calc(80px + var(--safe-bottom)); }
@@ -1247,10 +1509,6 @@
             .detail-overlay { align-items: center; }
             .detail-window .detail-header { border-radius: 20px 20px 0 0; height: 240px; }
             .detail-window .detail-close-btn { top: 16px; right: 16px; }
-            .pub-hero-slide { min-height: 260px; max-height: 400px; }
-            .pub-hero-slide .pub-hero-image { min-height: 260px; max-height: 400px; }
-            .pub-hero-slide .pub-hero-title { font-size: 1.3rem; }
-            .pub-hero-slide .pub-hero-subtitle { font-size: 0.75rem; }
             .support-btn { width: 64px; height: 64px; font-size: 1.6rem; }
         }
 
@@ -1450,9 +1708,22 @@
         </div>
     </header>
 
-    <!-- ===== BANNIÈRE PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE ===== -->
+    <!-- ===== BANNIÈRE PUBLICITAIRE "GONFLÉE" ===== -->
     <div id="pubHeroContainer" class="pub-hero-wrapper">
         <!-- Rempli dynamiquement -->
+    </div>
+
+    <!-- ===== MODALE PLEIN ÉCRAN PUBLICITÉ ===== -->
+    <div class="pub-fullscreen-modal" id="pubFullscreenModal" onclick="closePubFullscreen(event)">
+        <div class="fullscreen-content" onclick="event.stopPropagation();">
+            <button class="fullscreen-close" onclick="closePubFullscreen(event)"><i class="fas fa-times"></i></button>
+            <img id="fullscreenImg" src="" alt="Publicité" style="display:none;" />
+            <video id="fullscreenVideo" controls style="display:none;"></video>
+            <div class="fullscreen-info">
+                <h3 id="fullscreenTitle">Titre</h3>
+                <p id="fullscreenSubtitle">Description</p>
+            </div>
+        </div>
     </div>
 
     <!-- ===== RECHERCHE AI ===== -->
@@ -1531,7 +1802,7 @@
         };
 
         const GROQ_CONFIG = {
-            apiKey: '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',
+            apiKey: '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',
             model: 'llama-3.3-70b-versatile',
             endpoint: 'https://api.groq.com/openai/v1/chat/completions'
         };
@@ -1855,7 +2126,7 @@
         }
 
         // ================================================================
-        // CAROUSSEL PUBLICITAIRE PLEINE PAGE - TRANSITION DOUCE
+        // CAROUSSEL PUBLICITAIRE "GONFLÉ" AVEC SON ET PAUSE
         // ================================================================
         let publicitesActives = [];
         let currentPubIndex = 0;
@@ -1866,6 +2137,9 @@
         let touchStartX = 0;
         let touchEndX = 0;
         const PUB_DURATION = 15;
+
+        // Stockage des vidéos pour contrôle
+        let activeVideos = [];
 
         async function loadPublicites() {
             try {
@@ -1894,7 +2168,6 @@
                     }
                 });
 
-                // Mélanger et trier
                 publicitesActives = shuffleArray(publicitesActives);
                 publicitesActives.sort((a, b) => {
                     if (a.membreId && !b.membreId) return -1;
@@ -1925,7 +2198,6 @@
                 return;
             }
 
-            // Créer le slider avec toutes les pubs
             let slidesHtml = '';
             publicitesActives.forEach((pub, index) => {
                 slidesHtml += createSlideHtml(pub, index);
@@ -1954,7 +2226,119 @@
 
             container.innerHTML = html;
 
-            // Gestion du swipe sur le slider
+            // Ajouter les contrôles vidéo personnalisés
+            document.querySelectorAll('.pub-hero-slide video').forEach((video, index) => {
+                // Ajouter un contrôle de lecture/pause personnalisé
+                const container = video.closest('.pub-media-container');
+                if (container) {
+                    const controlsDiv = document.createElement('div');
+                    controlsDiv.className = 'video-controls-overlay';
+                    controlsDiv.style.cssText = `
+                        position: absolute;
+                        bottom: 80px;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        z-index: 10;
+                        display: flex;
+                        gap: 10px;
+                        background: rgba(0,0,0,0.5);
+                        padding: 6px 14px;
+                        border-radius: 30px;
+                        backdrop-filter: blur(8px);
+                        opacity: 0;
+                        transition: opacity 0.3s ease;
+                        pointer-events: none;
+                    `;
+                    
+                    // Bouton Play/Pause
+                    const playBtn = document.createElement('button');
+                    playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                    playBtn.style.cssText = `
+                        background: none;
+                        border: none;
+                        color: #fff;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        padding: 4px 8px;
+                        pointer-events: auto;
+                    `;
+                    
+                    // Bouton Son
+                    const soundBtn = document.createElement('button');
+                    soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                    soundBtn.style.cssText = `
+                        background: none;
+                        border: none;
+                        color: #fff;
+                        font-size: 1rem;
+                        cursor: pointer;
+                        padding: 4px 8px;
+                        pointer-events: auto;
+                    `;
+                    
+                    controlsDiv.appendChild(playBtn);
+                    controlsDiv.appendChild(soundBtn);
+                    container.appendChild(controlsDiv);
+
+                    // Événements
+                    let isVideoPlaying = true;
+                    
+                    playBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (video.paused) {
+                            video.play();
+                            playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+                            isVideoPlaying = true;
+                        } else {
+                            video.pause();
+                            playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                            isVideoPlaying = false;
+                        }
+                    });
+
+                    soundBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (video.muted) {
+                            video.muted = false;
+                            soundBtn.innerHTML = '<i class="fas fa-volume-up"></i>';
+                        } else {
+                            video.muted = true;
+                            soundBtn.innerHTML = '<i class="fas fa-volume-mute"></i>';
+                        }
+                    });
+
+                    // Afficher les contrôles au survol
+                    container.addEventListener('mouseenter', () => {
+                        controlsDiv.style.opacity = '1';
+                        controlsDiv.style.pointerEvents = 'auto';
+                    });
+                    container.addEventListener('mouseleave', () => {
+                        controlsDiv.style.opacity = '0';
+                        controlsDiv.style.pointerEvents = 'none';
+                    });
+
+                    // Pour mobile : afficher au toucher
+                    container.addEventListener('touchstart', () => {
+                        controlsDiv.style.opacity = '1';
+                        controlsDiv.style.pointerEvents = 'auto';
+                        setTimeout(() => {
+                            controlsDiv.style.opacity = '0';
+                            controlsDiv.style.pointerEvents = 'none';
+                        }, 3000);
+                    }, { passive: true });
+
+                    // Stocker la vidéo pour contrôle global
+                    activeVideos.push(video);
+                }
+            });
+
+            setTimeout(() => {
+                const slides = document.querySelectorAll('.pub-hero-slide');
+                if (slides.length) {
+                    slides[0].classList.add('active-slide');
+                }
+            }, 100);
+
             const slider = document.getElementById('pubHeroSlider');
             if (slider) {
                 slider.addEventListener('touchstart', function(e) {
@@ -1976,10 +2360,12 @@
                 }, { passive: true });
             }
 
-            // Démarrer le timer
             startPubTimer();
         }
 
+        // ================================================================
+        // CRÉATION D'UNE SLIDE PUBLICITAIRE AVEC SON ET PAUSE
+        // ================================================================
         function createSlideHtml(pub, index) {
             const isActive = index === currentPubIndex;
             
@@ -1988,14 +2374,13 @@
             if (pub.membreId) {
                 badgeClass = 'member';
                 badgeText = '👤 Membre';
-            } else if (pub.titre.toLowerCase().includes('promo') || pub.titre.toLowerCase().includes('offre')) {
+            } else if (pub.titre && (pub.titre.toLowerCase().includes('promo') || pub.titre.toLowerCase().includes('offre'))) {
                 badgeClass = 'promotion';
                 badgeText = '🏷️ Promotion';
             } else {
                 badgeText = '📢 Annonce';
             }
 
-            // Countdown
             const dateFin = new Date(pub.dateFin);
             const now = new Date();
             const diff = dateFin - now;
@@ -2012,11 +2397,26 @@
             const onclick = pub.lien ? `window.open('${pub.lien}', '_blank')` :
                 (pub.membreId ? `showDetail('${pub.membreId}')` : '');
 
+            const isVideo = pub.image && (pub.image.includes('.mp4') || pub.image.includes('.webm') || pub.image.includes('.ogg'));
+            
+            // ✅ VERSION AVEC CONTROLES COMPLETS (SON, PLAY/PAUSE, PLEIN ÉCRAN)
+            const mediaHtml = isVideo ? 
+                `<video class="pub-hero-video" autoplay muted loop playsinline controls>
+                    <source src="${pub.image}" type="video/mp4">
+                    Votre navigateur ne supporte pas la vidéo.
+                </video>` :
+                `<img src="${pub.image}" class="pub-hero-image" alt="${pub.titre}" loading="lazy" />`;
+
+            // Stocker les données pour l'ouverture en plein écran
+            const dataAttrs = `data-image="${pub.image}" data-title="${pub.titre || 'Annonce'}" data-subtitle="${pub.membreInfo ? pub.membreInfo.nom + ' · ' + (pub.membreInfo.professions ? pub.membreInfo.professions.slice(0,2).join(', ') : '') : 'Annonce spéciale'}" data-isvideo="${isVideo}"`;
+
             return `
-                <div class="pub-hero-slide" data-index="${index}">
-                    <img src="${pub.image}" class="pub-hero-image" alt="${pub.titre}" loading="lazy" />
+                <div class="pub-hero-slide ${isActive ? 'active-slide' : ''}" data-index="${index}" ${dataAttrs} onclick="openPubFullscreen(this)">
+                    <div class="pub-media-container">
+                        ${mediaHtml}
+                    </div>
                     <div class="pub-hero-overlay">
-                        <div class="pub-hero-title">${pub.titre}</div>
+                        <div class="pub-hero-title">${pub.titre || 'Annonce'}</div>
                         <div class="pub-hero-subtitle">
                             ${pub.membreInfo ? pub.membreInfo.nom || '' : ''}
                             ${pub.membreInfo && pub.membreInfo.professions && pub.membreInfo.professions.length ? '· ' + pub.membreInfo.professions.slice(0,2).join(', ') : ''}
@@ -2037,72 +2437,57 @@
             `;
         }
 
-        function updatePubSlide() {
-            const slider = document.getElementById('pubHeroSlider');
-            if (!slider) return;
+        // ================================================================
+        // OUVERTURE PLEIN ÉCRAN PUBLICITÉ AVEC SON
+        // ================================================================
+        function openPubFullscreen(element) {
+            const image = element.dataset.image || '';
+            const title = element.dataset.title || 'Publicité';
+            const subtitle = element.dataset.subtitle || '';
+            const isVideo = element.dataset.isvideo === 'true';
 
-            // Mettre à jour la transformation
-            const translateX = -currentPubIndex * 100;
-            slider.style.transform = `translateX(${translateX}%)`;
+            const modal = document.getElementById('pubFullscreenModal');
+            const img = document.getElementById('fullscreenImg');
+            const video = document.getElementById('fullscreenVideo');
+            const titleEl = document.getElementById('fullscreenTitle');
+            const subtitleEl = document.getElementById('fullscreenSubtitle');
 
-            // Mettre à jour les points
-            const dots = document.querySelectorAll('.pub-dots .dot');
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === currentPubIndex);
-            });
+            if (isVideo) {
+                img.style.display = 'none';
+                video.style.display = 'block';
+                video.src = image;
+                video.load();
+                // ✅ Son activé en plein écran
+                video.muted = false;
+                video.play().catch(() => {
+                    // Si le navigateur bloque l'autoplay avec son, on mute temporairement
+                    video.muted = true;
+                    video.play();
+                    // Indiquer à l'utilisateur qu'il peut activer le son
+                    showToast('🔊 Cliquez sur l\'icône son pour l\'activer', 'success');
+                });
+            } else {
+                video.style.display = 'none';
+                img.style.display = 'block';
+                img.src = image;
+            }
 
-            // Réinitialiser le timer
-            pubTimer = 0;
-            pubProgress = 0;
-            updateProgressBar();
+            titleEl.textContent = title;
+            subtitleEl.textContent = subtitle;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
-        function updateProgressBar() {
-            const fill = document.getElementById('pubProgressFill');
-            const text = document.getElementById('pubTimerText');
-            if (!fill || !text) return;
-            const progress = (pubProgress / PUB_DURATION) * 100;
-            fill.style.width = progress + '%';
-            text.textContent = Math.ceil(PUB_DURATION - pubProgress) + 's';
-        }
-
-        function startPubTimer() {
-            if (pubInterval) clearInterval(pubInterval);
-            if (publicitesActives.length <= 1) return;
-
-            pubTimer = 0;
-            pubProgress = 0;
-            updateProgressBar();
-
-            pubInterval = setInterval(() => {
-                if (!isPubPaused) {
-                    pubTimer++;
-                    pubProgress++;
-                    updateProgressBar();
-
-                    if (pubTimer >= PUB_DURATION) {
-                        nextPub();
-                    }
-                }
-            }, 1000);
-        }
-
-        function nextPub() {
-            if (publicitesActives.length <= 1) return;
-            currentPubIndex = (currentPubIndex + 1) % publicitesActives.length;
-            updatePubSlide();
-        }
-
-        function prevPub() {
-            if (publicitesActives.length <= 1) return;
-            currentPubIndex = (currentPubIndex - 1 + publicitesActives.length) % publicitesActives.length;
-            updatePubSlide();
-        }
-
-        function goToPub(index) {
-            if (index === currentPubIndex || index < 0 || index >= publicitesActives.length) return;
-            currentPubIndex = index;
-            updatePubSlide();
+        function closePubFullscreen(event) {
+            if (event && event.target !== event.currentTarget && !event.target.closest('.fullscreen-close')) {
+                return;
+            }
+            const modal = document.getElementById('pubFullscreenModal');
+            const video = document.getElementById('fullscreenVideo');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            video.pause();
         }
 
         // ================================================================
@@ -2137,6 +2522,7 @@
                 closePhotoModal();
                 closeDetail();
                 closeFavorites();
+                closePubFullscreen({ target: document.getElementById('pubFullscreenModal') });
             }
         });
 
@@ -2174,40 +2560,40 @@
                         `📚 CONNAISSANCES ACQUISES (confiance ${Math.round(memorySuggestion.confidence * 100)}%) :\n- Professions liées: ${memorySuggestion.professions.join(', ')}\n- Lieux fréquents: ${memorySuggestion.locations.join(', ')}\n`;
                 }
                 const systemPrompt = `Tu es un assistant IA ultra-intelligent spécialisé dans la recherche de professionnels en RDC.
-Tu as accès à une base de données de membres avec leurs informations.
+    Tu as accès à une base de données de membres avec leurs informations.
 
-${memoryContext}
+    ${memoryContext}
 
-🔍 ANALYSE CONTEXTUELLE :
-- Les membres peuvent avoir des AFFICHES qui ont été analysées par IA
-- Les domaines d'activité extraits des affiches sont: ${allDomainsList || 'aucun'}
-- Les compétences extraites sont: ${allSkillsList || 'aucune'}
-- Les professions déclarées sont: ${allProfessionsList}
+    🔍 ANALYSE CONTEXTUELLE :
+    - Les membres peuvent avoir des AFFICHES qui ont été analysées par IA
+    - Les domaines d'activité extraits des affiches sont: ${allDomainsList || 'aucun'}
+    - Les compétences extraites sont: ${allSkillsList || 'aucune'}
+    - Les professions déclarées sont: ${allProfessionsList}
 
-📋 DONNÉES DISPONIBLES :
-- Professions existantes: ${allProfessionsList}
-- Domaines d'activité (OCR): ${allDomainsList || 'aucun'}
-- Compétences (OCR): ${allSkillsList || 'aucune'}
-- Rôles possibles: ${allRoles.join(', ')}
-- Villes: ${allCities.join(', ')}
+    📋 DONNÉES DISPONIBLES :
+    - Professions existantes: ${allProfessionsList}
+    - Domaines d'activité (OCR): ${allDomainsList || 'aucun'}
+    - Compétences (OCR): ${allSkillsList || 'aucune'}
+    - Rôles possibles: ${allRoles.join(', ')}
+    - Villes: ${allCities.join(', ')}
 
-📤 FORMAT DE RÉPONSE (JSON UNIQUEMENT) :
-{
-  "professions": ["professions ciblées"],
-  "domaines": ["domaines d'activité ciblés (OCR)"],
-  "competences": ["compétences ciblées (OCR)"],
-  "locations": ["villes ou districts"],
-  "responsabilite": "rôle ou vide",
-  "motsCles": ["mots clés supplémentaires"],
-  "niveaux": ["niveaux d'études"],
-  "intention": "description de l'intention en 5 mots max"
-}
+    📤 FORMAT DE RÉPONSE (JSON UNIQUEMENT) :
+    {
+      "professions": ["professions ciblées"],
+      "domaines": ["domaines d'activité ciblés (OCR)"],
+      "competences": ["compétences ciblées (OCR)"],
+      "locations": ["villes ou districts"],
+      "responsabilite": "rôle ou vide",
+      "motsCles": ["mots clés supplémentaires"],
+      "niveaux": ["niveaux d'études"],
+      "intention": "description de l'intention en 5 mots max"
+    }
 
-🔑 RÈGLES IMPORTANTES :
-1. Sois précis et intelligent dans l'extraction des professions
-2. Utilise les domaines et compétences OCR quand c'est pertinent
-3. Si la requête est ambiguë, propose plusieurs options
-4. Retourne TOUJOURS un JSON valide`;
+    🔑 RÈGLES IMPORTANTES :
+    1. Sois précis et intelligent dans l'extraction des professions
+    2. Utilise les domaines et compétences OCR quand c'est pertinent
+    3. Si la requête est ambiguë, propose plusieurs options
+    4. Retourne TOUJOURS un JSON valide`;
 
                 const response = await fetch(GROQ_CONFIG.endpoint, {
                     method: 'POST',
@@ -2736,6 +3122,93 @@ ${memoryContext}
             document.body.style.overflow = '';
             selectedMemberId = null;
         };
+
+        // ================================================================
+        // CARROUSEL - NAVIGATION
+        // ================================================================
+        function updatePubSlide() {
+            const slider = document.getElementById('pubHeroSlider');
+            if (!slider) return;
+
+            const translateX = -currentPubIndex * 100;
+            slider.style.transform = `translateX(${translateX}%)`;
+
+            const dots = document.querySelectorAll('.pub-dots .dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === currentPubIndex);
+            });
+
+            const slides = document.querySelectorAll('.pub-hero-slide');
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active-slide', i === currentPubIndex);
+            });
+
+            // Mettre en pause toutes les vidéos non actives
+            document.querySelectorAll('.pub-hero-slide video').forEach((video, index) => {
+                if (index === currentPubIndex) {
+                    // Lecture de la vidéo active (avec son si possible)
+                    video.muted = false;
+                    video.play().catch(() => {
+                        video.muted = true;
+                        video.play();
+                    });
+                } else {
+                    video.pause();
+                }
+            });
+
+            pubTimer = 0;
+            pubProgress = 0;
+            updateProgressBar();
+        }
+
+        function updateProgressBar() {
+            const fill = document.getElementById('pubProgressFill');
+            const text = document.getElementById('pubTimerText');
+            if (!fill || !text) return;
+            const progress = (pubProgress / PUB_DURATION) * 100;
+            fill.style.width = progress + '%';
+            text.textContent = Math.ceil(PUB_DURATION - pubProgress) + 's';
+        }
+
+        function startPubTimer() {
+            if (pubInterval) clearInterval(pubInterval);
+            if (publicitesActives.length <= 1) return;
+
+            pubTimer = 0;
+            pubProgress = 0;
+            updateProgressBar();
+
+            pubInterval = setInterval(() => {
+                if (!isPubPaused) {
+                    pubTimer++;
+                    pubProgress++;
+                    updateProgressBar();
+
+                    if (pubTimer >= PUB_DURATION) {
+                        nextPub();
+                    }
+                }
+            }, 1000);
+        }
+
+        function nextPub() {
+            if (publicitesActives.length <= 1) return;
+            currentPubIndex = (currentPubIndex + 1) % publicitesActives.length;
+            updatePubSlide();
+        }
+
+        function prevPub() {
+            if (publicitesActives.length <= 1) return;
+            currentPubIndex = (currentPubIndex - 1 + publicitesActives.length) % publicitesActives.length;
+            updatePubSlide();
+        }
+
+        function goToPub(index) {
+            if (index === currentPubIndex || index < 0 || index >= publicitesActives.length) return;
+            currentPubIndex = index;
+            updatePubSlide();
+        }
 
         // ================================================================
         // CHARGEMENT
