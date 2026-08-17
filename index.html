@@ -1734,14 +1734,14 @@
                 <input type="text" id="aiSearchInput" placeholder="Ex: Je cherche un chauffeur..." autocomplete="off" />
                 <span class="ai-badge"><i class="fas fa-stars"></i> DeepSeek</span>
             </div>
-            <button class="btn-voice" id="voiceBtn" onclick="toggleVoice()" title="Recherche vocale">
+            <button class="btn-voice" id="voiceBtn" onclick="toggleVoice()" title="Recherche vocale" style = "background-color:black">
                 <i class="fas fa-microphone"></i>
             </button>
-            <button class="btn-ai-search" id="aiSearchBtn" onclick="performGroqSearch()">
+            <button class="btn-ai-search" id="aiSearchBtn" onclick="performGroqSearch()" style="background-color: darkgoldenrod">
                 <i class="fas fa-stars"></i> Rechercher
             </button>
         </div>
-        <div class="search-hint">
+        <div class="search-hint" style ="display:none">
             <span class="label">Suggestions</span>
             <span id="learnedHints"></span>
             <span class="hint-tag" onclick="setSearchQuery('Je cherche un chauffeur')"><i class="fas fa-car"></i> Chauffeur</span>
@@ -1802,7 +1802,7 @@
         };
 
         const GROQ_CONFIG = {
-            apiKey: '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',
+            apiKey: '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',
             model: 'llama-3.3-70b-versatile',
             endpoint: 'https://api.groq.com/openai/v1/chat/completions'
         };
