@@ -1802,10 +1802,11 @@
         };
 
         const GROQ_CONFIG = {
-            apiKey: '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',
-            model: 'llama-3.3-70b-versatile',
-            endpoint: 'https://api.groq.com/openai/v1/chat/completions'
-        };
+    apiKey: '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',
+    // ✅ MEILLEUR MODÈLE DISPONIBLE
+    model: 'qwen/qwen3.6-27b',
+    endpoint: 'https://api.groq.com/openai/v1/chat/completions'
+};
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
