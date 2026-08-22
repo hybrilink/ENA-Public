@@ -1726,8 +1726,7 @@
         </div>
     </div>
 
-    <!-- ===== RECHERCHE AI ===== -->
-    <div class="ai-search-section">
+       <div class="ai-search-section">
         <div class="search-container">
             <div class="search-input-wrapper">
                 <i class="fas fa-search search-icon"></i>
@@ -1749,6 +1748,7 @@
             <span class="hint-tag" onclick="setSearchQuery('Un maçon pour construire ma maison')"><i class="fas fa-hard-hat"></i> Maçon</span>
         </div>
     </div>
+
 
     <!-- ===== FILTRES ===== -->
     <div class="filter-section">
@@ -1802,11 +1802,10 @@
         };
 
         const GROQ_CONFIG = {
-    apiKey: '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',
-    // ✅ MEILLEUR MODÈLE DISPONIBLE
-    model: 'qwen/qwen3.6-27b',
-    endpoint: 'https://api.groq.com/openai/v1/chat/completions'
-};
+            apiKey: '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',
+            model: 'qwen/qwen3.6-27b',
+            endpoint: 'https://api.groq.com/openai/v1/chat/completions'
+        };
 
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
