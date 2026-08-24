@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Annonces · NAC Business</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="NAC Business">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#ffffff">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+        :root {
+            --black: #111111;
+            --black-soft: #242424;
+            --white: #ffffff;
+            --background: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-150: #eeeeee;
+            --gray-200: #e8e8e8;
+            --gray-300: #d8d8d8;
+            --gray-400: #a5a5a5;
+            --gray-500: #777777;
+            --green: #42a98f;
+            --green-light: #eaf7f3;
+            --gold: #f3b83f;
+            --shadow-small: 0 3px 14px rgba(0, 0, 0, 0.06);
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            --shadow-large: 0 15px 50px rgba(0, 0, 0, 0.16);
+            --radius: 24px;
+            --radius-small: 18px;
+            --safe-top: env(safe-area-inset-top, 0px);
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        html {
+            width: 100%;
+            min-height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+        body {
+            width: 100%;
+            min-height: 100vh;
+            background: var(--background);
+            color: var(--black);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            padding-bottom: calc(30px + var(--safe-bottom));
+        }
+        button,
+        input {
+            font-family: inherit;
+        }
+        button {
+            border: none;
+        }
+
+        /* =========================================================
+           CONTENEUR
+        ========================================================= */
+        .page {
+            width: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: calc(22px + var(--safe-top)) 18px 30px;
+        }
+
+        /* =========================================================
+           EN-TÊTE SIMPLE
+        ========================================================= */
+        .top-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 26px;
+        }
+        .back-button {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--gray-100);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--black);
+            cursor: pointer;
+            transition: transform .2s ease;
+        }
+        .back-button:active {
+            transform: scale(.92);
+        }
+        .page-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--black);
+            letter-spacing: -0.7px;
+        }
+        .header-right {
+            width: 44px;
+        }
+
+        /* =========================================================
+           BANNIÈRE PROMOTION
+        ========================================================= */
+        .promotion-banner {
+            width: 100%;
+            min-height: 185px;
+            border-radius: 30px;
+            background: linear-gradient(120deg, #111111, #333333);
+            color: white;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin-bottom: 24px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+        .promotion-banner::after {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -70px;
+            top: -60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .06);
+        }
+        .promotion-label {
+            width: fit-content;
+            padding: 7px 15px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .12);
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .promotion-title {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 7px;
+        }
+        .promotion-description {
+            color: rgba(255, 255, 255, .72);
+            font-size: 15px;
+        }
+
+        /* =========================================================
+           MON ANNONCE
+        ========================================================= */
+        .my-ad-card {
+            width: 100%;
+            min-height: 110px;
+            border-radius: 26px;
+            background: #fafafa;
+            border: 1px solid #ededed;
+            display: flex;
+            align-items: center;
+            padding: 18px 20px;
+            margin-bottom: 34px;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .03);
+            transition: transform .2s ease, background .2s ease;
+        }
+        .my-ad-card:active {
+            transform: scale(.98);
+        }
+        .my-ad-icon {
+            width: 62px;
+            height: 62px;
+            flex-shrink: 0;
+            border-radius: 50%;
+            background: #e9e9e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            color: #777;
+            position: relative;
+        }
+        .my-ad-plus {
+            position: absolute;
+            right: -3px;
+            bottom: -2px;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #fafafa;
+            font-size: 11px;
+        }
+        .my-ad-content {
+            flex: 1;
+            min-width: 0;
+            margin-left: 17px;
+        }
+        .my-ad-title {
+            font-size: 19px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .my-ad-subtitle {
+            color: #999;
+            font-size: 14px;
+        }
+        .my-ad-arrow {
+            color: #999;
+            font-size: 22px;
+            margin-left: 10px;
+        }
+
+        /* =========================================================
+           SECTION À LA UNE
+        ========================================================= */
+        .section-title-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding: 0 3px;
+        }
+        .section-title {
+            font-size: 29px;
+            font-weight: 800;
+            letter-spacing: -1.1px;
+        }
+        .section-count {
+            font-size: 14px;
+            color: #999;
+            font-weight: 500;
+        }
+
+        /* =========================================================
+           GRILLE
+        ========================================================= */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            align-items: start;
+        }
+
+        /* =========================================================
+           CARTE PUBLICITÉ
+        ========================================================= */
+        .ad-card {
+            background: #ffffff;
+            border: 1px solid #ededed;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-small);
+            cursor: pointer;
+            animation: cardAppear .35s ease both;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .ad-card:active {
+            transform: scale(.975);
+        }
+        @keyframes cardAppear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* =========================================================
+           MÉDIA DE LA CARTE
+        ========================================================= */
+        .ad-media {
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            background: linear-gradient(135deg, #f7f7f7, #eeeeee);
+            position: relative;
+            overflow: hidden;
+        }
+        .ad-media img,
+        .ad-media video {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+            background: #f4f4f4;
+        }
+        .ad-media video {
+            preload: auto;
+            object-position: center;
+        }
+
+        /* =========================================================
+           COEUR
+        ========================================================= */
+        .favorite-button {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .08);
+            z-index: 4;
+            cursor: pointer;
+        }
+        .favorite-button i {
+            font-size: 21px;
+        }
+
+        /* =========================================================
+           BADGE MEMBRE / PROMO
+        ========================================================= */
+        .ad-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 9px 13px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, .95);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .07);
+            z-index: 4;
+        }
+        .ad-badge.promo {
+            color: #c18a18;
+        }
+
+        /* =========================================================
+           BOUTON PLAY
+        ========================================================= */
+        .video-play-button {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .94);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, .12);
+            z-index: 3;
+            pointer-events: none;
+            transition: opacity .2s ease;
+        }
+        .video-play-button i {
+            color: #222;
+            font-size: 26px;
+            margin-left: 4px;
+        }
+        .ad-media.playing .video-play-button {
+            opacity: 0;
+        }
+
+        /* =========================================================
+           INFORMATIONS CARTE
+        ========================================================= */
+        .ad-info {
+            padding: 14px 14px 16px;
+        }
+        .ad-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #171717;
+            line-height: 1.25;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .ad-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .ad-time {
+            color: #999;
+            font-size: 11px;
+        }
+        .ad-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #555;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .ad-rating i {
+            color: var(--gold);
+            font-size: 11px;
+        }
+
+        /* =========================================================
+           CARTE SANS IMAGE
+        ========================================================= */
+        .ad-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 42px;
+        }
+
+        /* =========================================================
+           ÉTAT VIDE
+        ========================================================= */
+        .empty-state {
+            grid-column: 1 / -1;
+            padding: 70px 20px;
+            text-align: center;
+        }
+        .empty-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background: #f3f3f3;
+            margin: 0 auto 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            font-size: 28px;
+        }
+        .empty-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+        .empty-text {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* =========================================================
+           MODAL APERÇU
+        ========================================================= */
+        .preview-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: rgba(0, 0, 0, .65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: calc(20px + var(--safe-top)) 16px calc(20px + var(--safe-bottom));
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .25s ease, visibility .25s ease;
+        }
+        .preview-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+        .preview-modal {
+            width: 100%;
+            max-width: 520px;
+            max-height: 92vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 28px;
+            box-shadow: var(--shadow-large);
+            transform: scale(.94);
+            transition: transform .25s ease;
+            position: relative;
+        }
+        .preview-overlay.open .preview-modal {
+            transform: scale(1);
+        }
+        .preview-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, .92);
+            color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            cursor: pointer;
+            box-shadow: 0 5px 18px rgba(0, 0, 0, .12);
+        }
+        .preview-media {
+            width: 100%;
+            max-height: 55vh;
+            background: #111;
+            border-radius: 28px 28px 0 0;
+            overflow: hidden;
+        }
+        .preview-media img,
+        .preview-media video {
+            width: 100%;
+            max-height: 55vh;
+            display: block;
+            object-fit: contain;
+            background: #111;
+        }
+        .preview-details {
+            padding: 22px;
+        }
+        .preview-badge {
+            display: inline-flex;
+            padding: 7px 12px;
+            border-radius: 20px;
+            background: var(--green-light);
+            color: var(--green);
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .preview-title {
+            font-size: 25px;
+            line-height: 1.15;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+        .preview-description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            margin-bottom: 18px;
+        }
+        .preview-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: #888;
+            font-size: 12px;
+        }
+        .preview-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .preview-meta i {
+            color: var(--green);
+        }
+
+        /* =========================================================
+           RÉSEAUX SOCIAUX (PROPRIÉTAIRE)
+        ========================================================= */
+        .preview-social {
+            margin-top: 18px;
+            padding-top: 14px;
+            border-top: 1px solid #eee;
+        }
+        .preview-social-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #222;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .preview-social-title i {
+            color: var(--green);
+        }
+        .preview-social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .preview-social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #fff;
+            text-decoration: none;
+            transition: transform .15s ease, box-shadow .15s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, .06);
+        }
+        .preview-social-links a:active {
+            transform: scale(.94);
+        }
+        .social-whatsapp {
+            background: #25D366;
+        }
+        .social-phone {
+            background: #34B7F1;
+        }
+        .social-tiktok {
+            background: #000;
+        }
+        .social-facebook {
+            background: #1877f2;
+        }
+        .social-instagram {
+            background: #E4405F;
+        }
+        .social-telegram {
+            background: #0088cc;
+        }
+        .social-youtube {
+            background: #FF0000;
+        }
+        .social-linkedin {
+            background: #0077b5;
+        }
+        .social-website {
+            background: #555;
+        }
+        .preview-social-empty {
+            color: #999;
+            font-size: 13px;
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+        .toast-message {
+            position: fixed;
+            left: 50%;
+            bottom: calc(25px + var(--safe-bottom));
+            transform: translateX(-50%);
+            z-index: 10000;
+            background: #222;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 15px;
+            font-size: 13px;
+            box-shadow: var(--shadow-large);
+            animation: toastIn .25s ease;
+            white-space: nowrap;
+        }
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, 10px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        /* =========================================================
+           PETITS ÉCRANS
+        ========================================================= */
+        @media (max-width: 390px) {
+            .page {
+                padding-left: 13px;
+                padding-right: 13px;
+            }
+            .promotion-banner {
+                min-height: 165px;
+                padding: 24px;
+            }
+            .promotion-title {
+                font-size: 26px;
+            }
+            .section-title {
+                font-size: 25px;
+            }
+            .ads-grid {
+                gap: 10px;
+            }
+            .ad-info {
+                padding: 11px 11px 13px;
+            }
+            .ad-title {
+                font-size: 13px;
+            }
+            .favorite-button {
+                width: 42px;
+                height: 42px;
+                top: 9px;
+                left: 9px;
+            }
+            .ad-badge {
+                top: 9px;
+                right: 9px;
+                padding: 7px 10px;
+                font-size: 10px;
+            }
+            .video-play-button {
+                width: 62px;
+                height: 62px;
+            }
+            .video-play-button i {
+                font-size: 21px;
+            }
+            .preview-social-links a {
+                font-size: 10px;
+                padding: 6px 12px;
+            }
+        }
+
+        /* =========================================================
+           TABLET / GRAND ÉCRAN
+        ========================================================= */
+        @media (min-width: 700px) {
+            .ads-grid {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="page">
+
+        <!-- =========================================================
+        HEADER
+        ========================================================= -->
+        <header class="top-header">
+            <button class="back-button" onclick="window.location.href='index.html'" aria-label="Retour">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <h1 class="page-title">ESPACE PUBLICITAIRES</h1>
+            <div class="header-right"></div>
+        </header>
+
+        <!-- =========================================================
+        PROMOTION PRINCIPALE
+        ========================================================= -->
+        <div class="promotion-banner" id="promotionBanner" onclick="openFeaturedPreview()">
+            <div class="promotion-label">OFFRE DU MOMENT</div>
+            <div class="promotion-title">Spécial promo</div>
+            <div class="promotion-description">En savoir plus...</div>
+        </div>
+
+        
+
+        <!-- =========================================================
+        À LA UNE
+        ========================================================= -->
+        <div class="section-title-row">
+            <h2 class="section-title">À la une</h2>
+            <span class="section-count" id="statusLabel">0 annonces</span>
+        </div>
+
+        <!-- =========================================================
+        GRILLE DES ANNONCES
+        ========================================================= -->
+        <div id="statusGrid" class="ads-grid"></div>
+
+    </div>
+
+    <!-- =============================================================
+    MODAL APERÇU
+    ============================================================= -->
+    <div id="previewOverlay" class="preview-overlay" onclick="closePreview(event)">
+        <div class="preview-modal" onclick="event.stopPropagation()">
+            <button class="preview-close" onclick="closePreview()" aria-label="Fermer">
+                <i class="fas fa-xmark"></i>
+            </button>
+
+            <div id="previewMedia" class="preview-media"></div>
+
+            <div class="preview-details">
+                <div id="previewBadge" class="preview-badge">Annonce</div>
+                <h2 id="previewTitle" class="preview-title">Annonce</h2>
+                <p id="previewDescription" class="preview-description"></p>
+                <div id="previewMeta" class="preview-meta"></div>
+
+                <!-- RÉSEAUX SOCIAUX DU PROPRIÉTAIRE -->
+                <div id="previewSocial" class="preview-social">
+                    <div class="preview-social-title"><i class="fas fa-share-alt"></i> Contacter le propriétaire</div>
+                    <div id="previewSocialLinks" class="preview-social-links"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =============================================================
+    FIREBASE
+    ============================================================= -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        /* =========================================================
+           FIREBASE
+        ========================================================= */
+        const firebaseConfig = {
+            apiKey: "AIzaSyBasZlBNzWyUT7mujoXfjoOhY_gFDlYCvA",
+            authDomain: "theovet-gestion.firebaseapp.com",
+            databaseURL: "https://theovet-gestion-default-rtdb.firebaseio.com",
+            projectId: "theovet-gestion",
+            storageBucket: "theovet-gestion.firebasestorage.app",
+            messagingSenderId: "741805895445",
+            appId: "1:741805895445:web:31ea2d95b329a55b79831c",
+            measurementId: "G-EP0ZQBBNEY"
+        };
+
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        /* =========================================================
+           VARIABLES
+        ========================================================= */
+        let statuts = [];
+        let unsubscribeStatuts = null;
+        let lastDataSignature = "";
+        let selectedPreview = null;
+        let featuredAd = null;
+
+        /* =========================================================
+           ÉCHAPPEMENT HTML
+        ========================================================= */
+        function escapeHTML(value) {
+            if (value === null || value === undefined) return "";
+            return String(value)
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+
+        /* =========================================================
+           DATE FIREBASE
+        ========================================================= */
+        function dateToMillis(value) {
+            if (!value) return 0;
+            try {
+                if (typeof value === "object" && typeof value.toDate === "function") {
+                    return value.toDate().getTime();
+                }
+                if (typeof value === "object" && typeof value.seconds === "number") {
+                    return value.seconds * 1000;
+                }
+                const date = new Date(value);
+                if (!isNaN(date.getTime())) return date.getTime();
+            } catch (error) {
+                console.warn("Date invalide :", value);
+            }
+            return 0;
+        }
+
+        /* =========================================================
+           DATE FORMAT
+        ========================================================= */
+        function getTimeAgo(value) {
+            const time = dateToMillis(value);
+            if (!time) return "Récent";
+            const diff = Math.max(0, Date.now() - time);
+            const minutes = Math.floor(diff / 60000);
+            if (minutes < 1) return "À l'instant";
+            if (minutes < 60) return `${minutes} min`;
+            const hours = Math.floor(minutes / 60);
+            if (hours < 24) return `${hours}h`;
+            const days = Math.floor(hours / 24);
+            if (days < 7) return `${days}j`;
+            const weeks = Math.floor(days / 7);
+            return `${weeks} sem`;
+        }
+
+        /* =========================================================
+           DÉTECTION VIDÉO
+        ========================================================= */
+        function isVideoAd(ad) {
+            if (!ad) return false;
+            if (ad.mediaType === "video") return true;
+            const url = String(ad.image || "").toLowerCase();
+            return url.includes(".mp4") || url.includes(".webm") || url.includes(".ogg") || url.includes("video/");
+        }
+
+        /* =========================================================
+           CHARGEMENT FIRESTORE EN TEMPS RÉEL
+        ========================================================= */
+        function startRealtimeListener() {
+            if (unsubscribeStatuts) {
+                unsubscribeStatuts();
+                unsubscribeStatuts = null;
+            }
+
+            unsubscribeStatuts = db.collection("publicites")
+                .where("actif", "==", true)
+                .onSnapshot(snapshot => {
+                    const now = new Date();
+                    const nouvellesAnnonces = [];
+
+                    snapshot.forEach(doc => {
+                        const p = doc.data();
+                        const emplacement = p.emplacement || "all";
+                        if (emplacement !== "statut" && emplacement !== "all") return;
+
+                        const debut = dateToMillis(p.dateDebut);
+                        const fin = dateToMillis(p.dateFin);
+
+                        if (debut && now.getTime() < debut) return;
+                        if (fin && now.getTime() > fin) return;
+
+                        if (p.heureDebut && p.heureFin) {
+                            const currentMinutes = now.getHours() * 60 + now.getMinutes();
+                            const startParts = p.heureDebut.split(":").map(Number);
+                            const endParts = p.heureFin.split(":").map(Number);
+                            const startMinutes = startParts[0] * 60 + startParts[1];
+                            const endMinutes = endParts[0] * 60 + endParts[1];
+                            if (currentMinutes < startMinutes || currentMinutes > endMinutes) return;
+                        }
+
+                        nouvellesAnnonces.push({ id: doc.id, ...p });
+                    });
+
+                    nouvellesAnnonces.sort((a, b) => dateToMillis(b.dateDebut) - dateToMillis(a.dateDebut));
+
+                    const signature = nouvellesAnnonces.map(ad =>
+                        [ad.id, ad.titre || "", ad.description || "", ad.image || "", ad.mediaType || "", ad.vues || 0,
+                            dateToMillis(ad.dateDebut), dateToMillis(ad.dateFin)
+                        ].join("|")
+                    ).join("||");
+
+                    if (signature === lastDataSignature) return;
+                    lastDataSignature = signature;
+                    statuts = nouvellesAnnonces;
+                    renderStatuts();
+                }, error => {
+                    console.error("Erreur Firestore :", error);
+                    showToast("Impossible de charger les annonces", "error");
+                });
+        }
+
+        /* =========================================================
+           RENDU DES ANNONCES
+        ========================================================= */
+        function renderStatuts() {
+            const grid = document.getElementById("statusGrid");
+            const label = document.getElementById("statusLabel");
+            label.textContent = `${statuts.length} annonce${statuts.length > 1 ? "s" : ""}`;
+
+            if (!statuts.length) {
+                featuredAd = null;
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon"><i class="fas fa-bullhorn"></i></div>
+                        <div class="empty-title">Aucune annonce disponible</div>
+                        <div class="empty-text">Revenez plus tard pour découvrir les annonces.</div>
+                    </div>
+                `;
+                return;
+            }
+
+            featuredAd = statuts[0];
+            grid.innerHTML = statuts.map((ad, index) => createAdCard(ad, index)).join("");
+            prepareVideos();
+        }
+
+        /* =========================================================
+           CRÉATION CARTE
+        ========================================================= */
+        function createAdCard(ad, index) {
+            const video = isVideoAd(ad);
+            const titre = escapeHTML(ad.titre || "Annonce");
+            const description = escapeHTML(ad.description || "");
+            const image = escapeHTML(ad.image || "");
+
+            const badgeIsPromo = String(ad.titre || "").toLowerCase().includes("promo") ||
+                String(ad.titre || "").toLowerCase().includes("offre");
+            const badgeClass = badgeIsPromo ? "promo" : "";
+            const badgeText = ad.membreId ? "Membre" : badgeIsPromo ? "Promo" : "Annonce";
+
+            let media = "";
+            if (image) {
+                if (video) {
+                    media = `
+                        <div class="ad-media" id="media-${index}">
+                            <video id="video-${index}" src="${image}" playsinline webkit-playsinline muted preload="auto" loop poster="${escapeHTML(ad.poster || "")}" onclick="handleVideoClick(event, ${index})"></video>
+                            <div class="video-play-button" id="play-${index}"><i class="fas fa-play"></i></div>
+                        </div>
+                    `;
+                } else {
+                    media = `
+                        <div class="ad-media">
+                            <img src="${image}" alt="${titre}" loading="eager" decoding="async" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=\\'ad-placeholder\\'><i class=\\'fas fa-image\\'></i></div>';">
+                        </div>
+                    `;
+                }
+            } else {
+                media = `
+                    <div class="ad-media"><div class="ad-placeholder"><i class="fas fa-bullhorn"></i></div></div>
+                `;
+            }
+
+            const vues = Number(ad.vues || 0);
+
+            return `
+                <article class="ad-card" data-ad-id="${escapeHTML(ad.id)}" style="animation-delay:${index * 0.04}s" onclick="openPreviewById('${escapeHTML(ad.id)}')">
+                    ${media}
+                    <button class="favorite-button" onclick="toggleFavorite(event, '${escapeHTML(ad.id)}')" aria-label="Favori">
+                        <i class="far fa-heart"></i>
+                    </button>
+                    <div class="ad-badge ${badgeClass}">${escapeHTML(badgeText)}</div>
+                    <div class="ad-info">
+                        <div class="ad-title">${titre}</div>
+                        <div class="ad-bottom">
+                            <span class="ad-time">${getTimeAgo(ad.dateDebut)}</span>
+                            <span class="ad-rating"><i class="fas fa-eye"></i> ${vues}</span>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        /* =========================================================
+           PRÉPARER LES VIDÉOS
+        ========================================================= */
+        function prepareVideos() {
+            document.querySelectorAll(".ad-media video").forEach(video => {
+                video.preload = "auto";
+                try { video.load(); } catch (error) { console.warn("Préparation vidéo impossible", error); }
+                video.addEventListener("loadeddata", () => {
+                    const media = video.closest(".ad-media");
+                    if (media) media.classList.remove("loading");
+                }, { once: true });
+                video.addEventListener("play", () => {
+                    const media = video.closest(".ad-media");
+                    if (media) media.classList.add("playing");
+                });
+                video.addEventListener("pause", () => {
+                    const media = video.closest(".ad-media");
+                    if (media) media.classList.remove("playing");
+                });
+            });
+        }
+
+        /* =========================================================
+           CLIC VIDÉO
+        ========================================================= */
+        function handleVideoClick(event, index) {
+            event.stopPropagation();
+            const video = document.getElementById(`video-${index}`);
+            if (!video) return;
+
+            document.querySelectorAll(".ad-media video").forEach(other => {
+                if (other !== video && !other.paused) other.pause();
+            });
+
+            if (video.paused) {
+                video.muted = true;
+                video.play().then(() => {
+                    const media = video.closest(".ad-media");
+                    if (media) media.classList.add("playing");
+                }).catch(error => {
+                    console.warn("Lecture vidéo impossible :", error);
+                    showToast("Appuyez encore sur la vidéo pour la lire", "error");
+                });
+            } else {
+                video.pause();
+            }
+        }
+
+        /* =========================================================
+           RECHERCHE DU PROPRIÉTAIRE (membre) PAR ID
+        ========================================================= */
+        async function fetchMembreById(membreId) {
+            if (!membreId) return null;
+            try {
+                const doc = await db.collection("membres").doc(membreId).get();
+                if (doc.exists) {
+                    return { id: doc.id, ...doc.data() };
+                }
+            } catch (e) {
+                console.warn("Erreur chargement membre:", e);
+            }
+            return null;
+        }
+
+        /* =========================================================
+           OUVRIR APERÇU PAR ID
+        ========================================================= */
+        async function openPreviewById(id) {
+            const ad = statuts.find(item => item.id === id);
+            if (!ad) return;
+
+            // Récupérer les infos du propriétaire si un membreId est présent
+            let proprietaire = null;
+            if (ad.membreId) {
+                proprietaire = await fetchMembreById(ad.membreId);
+            }
+
+            openPreview(ad, proprietaire);
+        }
+
+        /* =========================================================
+           APERÇU AVEC RÉSEAUX SOCIAUX
+        ========================================================= */
+        function openPreview(ad, proprietaire = null) {
+            selectedPreview = ad;
+
+            const overlay = document.getElementById("previewOverlay");
+            const media = document.getElementById("previewMedia");
+            const title = document.getElementById("previewTitle");
+            const description = document.getElementById("previewDescription");
+            const badge = document.getElementById("previewBadge");
+            const meta = document.getElementById("previewMeta");
+            const socialLinks = document.getElementById("previewSocialLinks");
+
+            title.textContent = ad.titre || "Annonce";
+            description.textContent = ad.description || "Aucune description disponible.";
+
+            const isPromo = String(ad.titre || "").toLowerCase().includes("promo") ||
+                String(ad.titre || "").toLowerCase().includes("offre");
+
+            badge.textContent = ad.membreId ? "Membre" : isPromo ? "Promotion" : "Annonce";
+            badge.style.background = isPromo ? "#fff5df" : "#eaf7f3";
+            badge.style.color = isPromo ? "#bd8617" : "#42a98f";
+
+            meta.innerHTML = `
+                <span><i class="fas fa-clock"></i> ${escapeHTML(getTimeAgo(ad.dateDebut))}</span>
+                <span><i class="fas fa-eye"></i> ${Number(ad.vues || 0)} vues</span>
+            `;
+
+            // Média
+            media.innerHTML = "";
+            if (ad.image) {
+                if (isVideoAd(ad)) {
+                    const video = document.createElement("video");
+                    video.src = ad.image;
+                    video.controls = true;
+                    video.playsInline = true;
+                    video.setAttribute("webkit-playsinline", "");
+                    video.preload = "auto";
+                    video.autoplay = false;
+                    media.appendChild(video);
+                } else {
+                    const img = document.createElement("img");
+                    img.src = ad.image;
+                    img.alt = ad.titre || "Annonce";
+                    media.appendChild(img);
+                }
+            } else {
+                media.innerHTML = `
+                    <div style="height:220px;display:flex;align-items:center;justify-content:center;color:#aaa;font-size:45px;">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                `;
+            }
+
+            // =========================================================
+            // RÉSEAUX SOCIAUX DU PROPRIÉTAIRE
+            // =========================================================
+            socialLinks.innerHTML = "";
+
+            if (proprietaire) {
+                const socialData = [
+                    { type: "whatsapp", value: proprietaire.whatsapp, icon: "fab fa-whatsapp", label: "WhatsApp",
+                        cls: "social-whatsapp" },
+                    { type: "phone", value: proprietaire.telephone, icon: "fas fa-phone", label: "Appeler",
+                        cls: "social-phone" },
+                    { type: "tiktok", value: proprietaire.tiktok, icon: "fab fa-tiktok", label: "TikTok",
+                        cls: "social-tiktok" },
+                    { type: "facebook", value: proprietaire.facebook, icon: "fab fa-facebook-f",
+                        label: "Facebook", cls: "social-facebook" },
+                    { type: "instagram", value: proprietaire.instagram, icon: "fab fa-instagram",
+                        label: "Instagram", cls: "social-instagram" },
+                    { type: "telegram", value: proprietaire.telegram, icon: "fab fa-telegram-plane",
+                        label: "Télégramme", cls: "social-telegram" },
+                    { type: "youtube", value: proprietaire.youtube, icon: "fab fa-youtube", label: "YouTube",
+                        cls: "social-youtube" },
+                    { type: "linkedin", value: proprietaire.linkedin, icon: "fab fa-linkedin-in",
+                        label: "LinkedIn", cls: "social-linkedin" },
+                    { type: "website", value: proprietaire.website, icon: "fas fa-globe", label: "Site web",
+                        cls: "social-website" },
+                ];
+
+                let hasSocial = false;
+                socialData.forEach(s => {
+                    if (s.value) {
+                        let href = "";
+                        if (s.type === "whatsapp") {
+                            const clean = String(s.value).replace(/\D/g, "");
+                            if (clean) href = `https://wa.me/${clean}`;
+                        } else if (s.type === "phone") {
+                            const clean = String(s.value).replace(/\D/g, "");
+                            if (clean) href = `tel:${clean}`;
+                        } else if (s.type === "tiktok") {
+                            const username = String(s.value).replace(/^@/, "");
+                            if (username) href = `https://www.tiktok.com/@${username}`;
+                        } else if (s.type === "facebook") {
+                            const uid = String(s.value).replace(/^@/, "");
+                            if (uid) href = `https://www.facebook.com/${uid}`;
+                        } else if (s.type === "instagram") {
+                            const username = String(s.value).replace(/^@/, "");
+                            if (username) href = `https://www.instagram.com/${username}`;
+                        } else if (s.type === "telegram") {
+                            const username = String(s.value).replace(/^@/, "");
+                            if (username) href = `https://t.me/${username}`;
+                        } else if (s.type === "youtube") {
+                            href = String(s.value);
+                            if (!href.startsWith("http")) href = `https://youtube.com/@${s.value}`;
+                        } else if (s.type === "linkedin") {
+                            href = String(s.value);
+                            if (!href.startsWith("http")) href = `https://linkedin.com/in/${s.value}`;
+                        } else if (s.type === "website") {
+                            let url = String(s.value);
+                            if (!url.startsWith("http")) url = `https://${url}`;
+                            href = url;
+                        }
+
+                        if (href) {
+                            hasSocial = true;
+                            const a = document.createElement("a");
+                            a.href = href;
+                            a.target = "_blank";
+                            a.rel = "noopener noreferrer";
+                            a.className = s.cls;
+                            a.innerHTML = `<i class="${s.icon}"></i> ${s.label}`;
+                            socialLinks.appendChild(a);
+                        }
+                    }
+                });
+
+                // Si aucun réseau social trouvé, on affiche un message
+                if (!hasSocial) {
+                    socialLinks.innerHTML = `<span class="preview-social-empty">Aucun moyen de contact disponible</span>`;
+                }
+            } else {
+                // Pas de propriétaire
+                socialLinks.innerHTML = `<span class="preview-social-empty">Aucune information de contact disponible</span>`;
+            }
+
+            // Affichage modal
+            overlay.classList.add("open");
+            document.body.style.overflow = "hidden";
+        }
+
+        /* =========================================================
+           APERÇU PROMOTION
+        ========================================================= */
+        function openFeaturedPreview() {
+            if (!featuredAd) {
+                showToast("Aucune promotion disponible", "error");
+                return;
+            }
+            // Pour la promotion, on essaie de charger le propriétaire si existant
+            (async () => {
+                let proprietaire = null;
+                if (featuredAd.membreId) {
+                    proprietaire = await fetchMembreById(featuredAd.membreId);
+                }
+                openPreview(featuredAd, proprietaire);
+            })();
+        }
+
+        /* =========================================================
+           FERMER APERÇU
+        ========================================================= */
+        function closePreview(event) {
+            if (event && event.target !== document.getElementById("previewOverlay")) return;
+            const overlay = document.getElementById("previewOverlay");
+            overlay.classList.remove("open");
+            document.body.style.overflow = "";
+            const video = document.querySelector("#previewMedia video");
+            if (video) { video.pause();
+                video.removeAttribute("src"); }
+            selectedPreview = null;
+        }
+
+        /* =========================================================
+           FAVORIS
+        ========================================================= */
+        function toggleFavorite(event, id) {
+            event.stopPropagation();
+            const button = event.currentTarget;
+            const icon = button.querySelector("i");
+            const active = icon.classList.contains("fas");
+            if (active) {
+                icon.classList.remove("fas");
+                icon.classList.add("far");
+                icon.style.color = "";
+            } else {
+                icon.classList.remove("far");
+                icon.classList.add("fas");
+                icon.style.color = "#e75b63";
+            }
+        }
+
+        /* =========================================================
+           CRÉER UNE ANNONCE
+        ========================================================= */
+        function createStatus() {
+            window.location.href = "admin.html#publiciteSection";
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+        function showToast(message, type = "success") {
+            const old = document.querySelector(".toast-message");
+            if (old) old.remove();
+            const toast = document.createElement("div");
+            toast.className = "toast-message";
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        /* =========================================================
+           FERMETURE AVEC ESC
+        ========================================================= */
+        document.addEventListener("keydown", event => {
+            if (event.key === "Escape") closePreview();
+        });
+
+        /* =========================================================
+           INITIALISATION
+        ========================================================= */
+        document.addEventListener("DOMContentLoaded", () => {
+            startRealtimeListener();
+        });
+
+        window.addEventListener("beforeunload", () => {
+            if (unsubscribeStatuts) unsubscribeStatuts();
+        });
+    </script>
+
+</body>
+</html>
