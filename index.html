@@ -17,6 +17,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
 
+    <script src="https://cdn.jsdelivr.net/npm/eruda"></script>
+    <script>
+        if (window.eruda) {
+            eruda.init();
+            console.log('✅ Eruda console activée');
+        } else {
+            document.addEventListener('DOMContentLoaded', function() {
+                eruda.init();
+                console.log('✅ Eruda console activée');
+            });
+        }
+    </script>
+
     <style>
         /* =========================================================
            RESET
@@ -2763,9 +2776,9 @@
     // CONFIG GROQ
     // =========================================================
     const GROQ_CONFIG = {
-        apiKey: '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',
+        apiKey: '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',
         endpoint: 'https://api.groq.com/openai/v1/chat/completions',
-        model: 'qwen/qwen3.6-27b',
+        model: 'qwen/qwen3.8-27b',
     };
 
     // =========================================================
